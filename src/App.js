@@ -1,6 +1,6 @@
 import React, { Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import NavBar from './Components/navBar'
+import NavBar from './Components/NavBar'
 import './App.css';
 
 export default class App extends Component {
