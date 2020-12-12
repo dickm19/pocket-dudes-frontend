@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function PetCard( {pet}){
+export default function PetCard( {pet}){
 
     return(
         <div className='pet-card'>
