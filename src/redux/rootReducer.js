@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 const defaultState = {
     // petsApi: [],
-    currentPet: {}
+    currentPet: null
     
 }
 
