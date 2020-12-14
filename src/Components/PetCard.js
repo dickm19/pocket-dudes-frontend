@@ -1,13 +1,51 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { setCurrentPet } from '../redux/actions';
 import { connect } from 'react-redux'
-function PetCard( {pet, currentPet, setCurrentPet}){
 
+function PetCard( {pet, currentPet, setCurrentPet, }){
+
+    const [hunger, setHunger] = useState(pet.hunger)
+    const [happiness, setHappiness] = useState(pet.happiness)
+
+    function feedPet(pet){
+        if (hunger < 10){
+
+            setHunger(hunger + 1)
+            fetch(`http://localhost:5000/pets/${pet.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accepts': 'application/json'
+                },
+                body: JSON.stringify({
+                    hunger: pet.hunger + 1
+                })
+            })
+            .then(resp => resp.json())
+        }else{
+            console.log('full')
+        }
+    }
+
+    function playWithPet(pet){
+        setHappiness(happiness + 1)
+        fetch(`http://localhost:5000/pets/${pet.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: JSON.stringify({
+                happiness: pet.happiness + 1
+            })
+        })
+        .then(resp => resp.json())
+    }
     return(
         <div onClick={() => setCurrentPet(pet)} className='pet-card'>
             {pet === currentPet ? 
                 <div className='care-buttons'>
-                    <button className="feed" onClick={feedPet}>Feed</button>
+                    <button className="feed" onClick={() => feedPet(pet)}>Feed</button>
                     <button className="play" onClick={playWithPet}>Play</button>
                 </div>
                 :
@@ -22,7 +60,9 @@ function PetCard( {pet, currentPet, setCurrentPet}){
 }
 
 function mdp(dispatch) {
-    return { setCurrentPet: () => dispatch(setCurrentPet()) }
+    return { 
+        setCurrentPet: () => dispatch(setCurrentPet())
+     }
 }
 export default connect(null, mdp)(PetCard);
   

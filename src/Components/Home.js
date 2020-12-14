@@ -1,5 +1,6 @@
 import React from 'react'
 import PetCard from './PetCard'
+import NewPetModal from './NewPetModal'
 
 export default function Home({ currentPet }){
     return(
@@ -7,7 +8,7 @@ export default function Home({ currentPet }){
             {currentPet ? 
                 <PetCard/>
                 :
-                <NewPetModal/>
+                null
             }
         </div>
     )

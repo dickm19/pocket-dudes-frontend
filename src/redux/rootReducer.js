@@ -2,7 +2,9 @@ import { combineReducers } from "redux";
 
 const defaultState = {
     // petsApi: [],
-    currentPet: {}
+    currentPet: {},
+    user: {}
+    
 }
 
 // function petsApiReducer(state = defaultState.petsApi, action) {
@@ -15,6 +17,14 @@ const defaultState = {
 //             return state;
 //     }
 // }
+function getUserFromApi(state = defaultState.user, action){
+    switch(action.type){
+        case "FETCH_USER":
+            return action.payload
+        default:
+            return state
+    }
+}
 
 function currentPetReducer( state = defaultState.currentPet, action){
     switch (action.type) {
@@ -28,7 +38,8 @@ function currentPetReducer( state = defaultState.currentPet, action){
 
 const rootReducer = combineReducers({
     // petsApi: petsApiReducer,
-    currentPet: currentPetReducer
+    currentPet: currentPetReducer,
+    user: getUserFromApi
   });
   
 

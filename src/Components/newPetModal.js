@@ -65,7 +65,7 @@ const FormContainer = styled.form `
 `
 
 
-export const NewPetModal = (props) => {
+export default function NewPetModal(props) {
   const initialState = {
     name: ""
   };
