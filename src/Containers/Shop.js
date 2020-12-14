@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import Dropdown from 'react-dropdown';
+import ItemCard from '../Components/ItemCard'
 import 'react-dropdown/style.css';
 
 export default function Shop({items}){

@@ -2,10 +2,10 @@ import React, {useState} from 'react'
 import { setCurrentPet } from '../redux/actions';
 import { connect } from 'react-redux'
 
-function PetCard( {pet, currentPet, setCurrentPet, }){
+function PetCard( {pet, currentPet}){
 
-    const [hunger, setHunger] = useState(pet.hunger)
-    const [happiness, setHappiness] = useState(pet.happiness)
+    const [hunger, setHunger] = useState(10)
+    const [happiness, setHappiness] = useState(10)
 
     function feedPet(pet){
         if (hunger < 10){
@@ -52,7 +52,7 @@ function PetCard( {pet, currentPet, setCurrentPet, }){
                 null
             }
             <p>{pet.name}</p>
-            <img className='pet-image' src={pet.image_url} alt={pet.name}/>
+            <img className='pet-image' src={pet.pet_image_url.image_url} alt={pet.name}/>
             <p className='happiness'>Happiness: {pet.happiness}/10</p>
             <p className='hunger'>Hunger: {pet.hunger}/10</p>
         </div>

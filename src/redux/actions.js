@@ -1,4 +1,4 @@
-import {FETCH_USER, SET_CURRENT_PET } from './actionTypes'
+import {SET_CURRENT_PET } from './actionTypes'
 // FETCH_PETS, ADD_PET, 
 
 export function setCurrentPet(pet) {
@@ -7,16 +7,9 @@ export function setCurrentPet(pet) {
     }
 }
 
-
-
-
-export function getUserFromApi() {
-    return function (dispatch) {
-        fetch('http://localhost:5000/users/1')
-            .then(resp => resp.json())
-            .then(data => dispatch({ type: FETCH_USER, payload: data }))
-    }
-}
+// export function getUserFromApi() {
+   
+// }
 
 // export function addPetToApi(petObj) {
 //     return function (dispatch) {
