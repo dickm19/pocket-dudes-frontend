@@ -28,14 +28,14 @@ export default class App extends Component {
         />
         <Route
           exact
-          path="/home"
+          path="/pets"
           render={() => 
             <PetsContainer/>
           }
         />
         <Route
           exact
-          path="/home"
+          path="/shop"
           render={() => 
             <Shop/>
           }
