@@ -83,7 +83,7 @@ export const NewPetModal = (props) => {
     event.preventDefault();
     let pet = {
       name: name,
-      
+
     };
     props.handlePetCreate(pet)
     clearState()

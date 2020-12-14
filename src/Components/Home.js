@@ -1,7 +1,7 @@
 import React from 'react'
 import PetCard from './PetCard'
 
-export default function Home(){
+export default function Home({ currentPet }){
     return(
         <div className="home">
             {currentPet ? 

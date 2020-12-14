@@ -1,9 +1,10 @@
 import React from 'react'
-
-export default function PetCard( {pet, currentPet}){
+import { setCurrentPet } from '../redux/actions';
+import { connect } from 'react-redux'
+function PetCard( {pet, currentPet, setCurrentPet}){
 
     return(
-        <div className='pet-card'>
+        <div onClick={() => setCurrentPet(pet)} className='pet-card'>
             {pet === currentPet ? 
                 <div className='care-buttons'>
                     <button className="feed" onClick={feedPet}>Feed</button>
@@ -19,3 +20,9 @@ export default function PetCard( {pet, currentPet}){
         </div>
     )
 }
+
+function mdp(dispatch) {
+    return { setCurrentPet: () => dispatch(setCurrentPet()) }
+}
+export default connect(null, mdp)(PetCard);
+  

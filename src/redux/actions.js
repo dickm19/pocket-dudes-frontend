@@ -1,6 +1,11 @@
-// import {FETCH_PETS, ADD_PET } from './actionTypes'
+import {SET_CURRENT_PET } from './actionTypes'
+// FETCH_PETS, ADD_PET, 
 
-
+export function setCurrentPet(pet) {
+    return function (dispatch) {
+        dispatch({type: SET_CURRENT_PET, payload: pet})
+    }
+}
 
 // export function getPetsFromApi() {
 //     return function (dispatch) {

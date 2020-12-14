@@ -1,12 +1,13 @@
 import React, { Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Components/Home'
-import PetsContainer from './Components/PetsConainer'
+import PetsContainer from './Containers/PetsContainer'
 import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
+import { connect } from 'react-redux'
 import './App.css';
 
-export default class App extends Component {
+class App extends Component {
   
   render(){
     return (
@@ -49,3 +50,10 @@ export default class App extends Component {
   }
 }
 
+function msp(state) {
+  return {
+      currentPet: state.currentPet
+  }
+}
+
+export default withRouter(connect(msp)(App));
