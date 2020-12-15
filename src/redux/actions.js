@@ -1,4 +1,4 @@
-import {SET_CURRENT_PET, DECREMENT_PET } from './actionTypes'
+import {SET_CURRENT_PET } from './actionTypes'
 
 // FETCH_PETS, ADD_PET, 
 

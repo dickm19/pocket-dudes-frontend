@@ -2,7 +2,7 @@ import React, { Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Components/Home'
 import PetsContainer from './Containers/PetsContainer'
-import Shop from './Containers/Shop'
+//import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
 import { connect } from 'react-redux'
 
@@ -15,14 +15,14 @@ class App extends Component {
   }
 
   componentDidMount(){
-    return fetch('http://localhost:5000/api/v1/users/1')
+    fetch('http://localhost:5000/api/v1/users/1')
           .then(resp => resp.json())
           .then(data => this.setState({user: data}))
 
   }
   
   render(){
-    console.log(this.props.currentPet)
+    
     return (
       <div className="app">
 
@@ -54,13 +54,13 @@ class App extends Component {
               <PetsContainer currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/shop"
             render={() => 
               <Shop currentPet={this.props.currentPet} user={this.state.user}/>
             }
-          />
+          /> */}
   
           {/* modal */}
             {/* <NewPetModal/> */}
@@ -78,8 +78,7 @@ class App extends Component {
 
 function msp(state) {
   return {
-      currentPet: state.currentPet,
-      user: state.user
+      currentPet: state.currentPet
   }
 }
 
