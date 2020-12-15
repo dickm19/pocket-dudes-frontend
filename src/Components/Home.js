@@ -6,9 +6,9 @@ export default function Home({ user,  currentPet }){
     return(
         <div className="home">
             {currentPet ? 
-                null
+                <PetCard pet={currentPet} />
                 :
-                <PetCard currentPet={currentPet} />
+                null
             }
         </div>
     )

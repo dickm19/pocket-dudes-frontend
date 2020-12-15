@@ -22,7 +22,7 @@ class App extends Component {
   }
   
   render(){
-    console.log(this.state.user)
+    console.log(this.props.currentPet)
     return (
       <div className="app">
 
