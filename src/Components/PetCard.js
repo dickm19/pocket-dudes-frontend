@@ -8,7 +8,8 @@ class PetCard extends React.Component{
     state = {
         hunger: this.props.pet.hunger,
         happiness: this.props.pet.happiness,
-        clicked: false
+        clicked: false,
+
     }
 
 
@@ -23,7 +24,7 @@ class PetCard extends React.Component{
         setInterval(() => {
             if (this.state.happiness > 0 && this.state.hunger > 0){
                 this.decrementPet()
-                window.location.reload(false);
+                // window.location.reload(false);
             }
         }, 1*60000);
     }
@@ -43,10 +44,8 @@ class PetCard extends React.Component{
                 })
             })
             .then(resp => resp.json())
-        }else{
-            console.log('full')
+            this.props.useFood()
         }
-        window.location.reload(false)
     }
 
     playWithPet(){
@@ -63,11 +62,13 @@ class PetCard extends React.Component{
                 })
             })
             .then(resp => resp.json())
-        }else{
-            console.log('happy')
+        
         }
-        window.location.reload(false)
+        this.props.useToy()
+        //window.location.reload(false)
     }
+
+    
 
     localSetCurrentPet = () => {
         this.setState({clicked: true})
@@ -75,11 +76,9 @@ class PetCard extends React.Component{
     }
 
     decrementPet = () => {
-        console.log("In Decrement pet")
-        
             
-            const decrementedHappiness = this.props.pet.happiness - 1
-            const decrementedHunger = this.props.pet.hunger - 1
+            const decrementedHappiness = this.state.happiness - 1
+            const decrementedHunger = this.state.hunger - 1
 
             fetch(`http://localhost:5000/api/v1/pets/1`, {
                 method: 'PATCH',
@@ -93,17 +92,14 @@ class PetCard extends React.Component{
                 })
             })
             .then( resp => resp.json())
-            .then(data => {
-                console.log(data)
+            .then(() => {
                 this.setState({
                     happiness: decrementedHappiness,
                     hunger: decrementedHunger
-                })
-                
-               
-                })
-        
+                })})
     }
+
+
 
     render(){
         console.log("In Render")

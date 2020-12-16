@@ -4,6 +4,7 @@ import Home from './Components/Home'
 import PetsContainer from './Containers/PetsContainer'
 import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
+import ItemBar from './Containers/ItemBar'
 import { connect } from 'react-redux'
 
 import './App.css';
@@ -12,7 +13,8 @@ class App extends Component {
 
   state = {
     user: null,
-    itmes: {}
+    items: [],
+    bought: []
   }
 
   componentDidMount(){
@@ -24,7 +26,11 @@ class App extends Component {
   fetchUser = () => {
     fetch('http://localhost:5000/api/v1/users/1')
     .then(resp => resp.json())
-    .then(data => this.setState({user: data}))
+    .then(data => {
+      this.setState({
+      user: data.user,
+      bought: data.user.items
+    })})
   }
 
   fetchItems = () => {
@@ -32,18 +38,65 @@ class App extends Component {
           .then(resp => resp.json())
           .then(data => this.setState({items: data}))  
   }
+
+  buyItem = (item) => {
+    fetch(`http://localhost:5000/api/v1/items/${item.id}`, {
+           method: 'PATCH',
+           headers: {
+               'Content-Type': 'application/json',
+               'Accepts': 'application/json'
+           },
+           body: JSON.stringify({user_id: this.state.user.id})
+       })
+       .then(resp => resp.json())
+       .then(() => this.setState({user: item.user}))
+  }
+
+  useToy = () => {
+    const toy = this.state.user.items.find(item => item.kind === 'toy' )
+    const boughtCopy = [...this.state.bought]
+    const index = boughtCopy.findIndex(item => item === toy)
+    boughtCopy.splice(index, 1)
+    this.setState({bought: boughtCopy})
+    fetch(`http://localhost:5000/api/v1/items/${toy.id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: JSON.stringify({user_id: null})
+        })
+        .then(resp => resp.json())
+  }
+  
+  useFood = () => {
+    const food = this.state.user.items.find(item => item.kind === 'food' )
+    const boughtCopy = [...this.state.bought]
+    const index = boughtCopy.findIndex(item => item === food)
+    boughtCopy.splice(index, 1)
+    this.setState({bought: boughtCopy})
+    fetch(`http://localhost:5000/api/v1/items/${food.id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: JSON.stringify({user_id: null})
+        })
+        .then(resp => resp.json())
+  }
   
   render(){
-    
+
     return (
-      <div className="app">
+      <div>
 
         { this.state.user
            ?
            
           (<div className="App">
           <NavBar/>
-            
+          <ItemBar buyItem={this.buyItem} bought={this.state.bought} user={this.state.user}/>
           <Route
             exact
             path="/"
@@ -56,21 +109,21 @@ class App extends Component {
             path="/home"
             render={() => 
               
-              <Home currentPet={this.props.currentPet} user={this.state.user}/>
+              <Home useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
           <Route
             exact
             path="/pets"
             render={() => 
-              <PetsContainer currentPet={this.props.currentPet} user={this.state.user}/>
+              <PetsContainer useFood={this.useFood} useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
           <Route
             exact
             path="/shop"
             render={() => 
-              <Shop items={this.state.items} currentPet={this.props.currentPet} user={this.state.user}/>
+              <Shop  buyItem={this.buyItem} bought={this.state.bought} items={this.state.items} currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
   
@@ -81,7 +134,6 @@ class App extends Component {
             null
         }
       </div>
-
         
     );
   }

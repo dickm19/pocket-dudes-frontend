@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 const defaultState = {
     // petsApi: [],
     currentPet: null,
-
+    bought: []
     
 }
 
@@ -28,12 +28,19 @@ function currentPetReducer( state = defaultState.currentPet, action){
     }
 }
 
-
-
+function boughtReducer( state = defaultState.bought, action){
+    switch (action.type){
+        case 'BUY_ITEM':
+            return [...state, action.payload]
+        default:
+            return state
+    }
+}
 
 const rootReducer = combineReducers({
     // petsApi: petsApiReducer,
-    currentPet: currentPetReducer
+    currentPet: currentPetReducer,
+    bought: boughtReducer
   });
   
 

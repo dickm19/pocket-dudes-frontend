@@ -1,10 +1,10 @@
 import React from 'react'
 import PetCard from '../Components/PetCard'
 
-export default function PetsContainer({user}){
+export default function PetsContainer({user, useToy, useFood}){
 
     const renderPets = () => {
-        return user ? user.pets.map(petObj => <PetCard key={petObj.id} pet={petObj}/>) : null
+        return user ? user.pets.map(petObj => <PetCard useFood={useFood} useToy={useToy} key={petObj.id} pet={petObj}/>) : null
     }
 
     return(

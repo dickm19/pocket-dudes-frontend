@@ -3,18 +3,18 @@ import Dropdown from 'react-dropdown';
 import ItemCard from '../Components/ItemCard'
 import 'react-dropdown/style.css';
 
-export default function Shop({items}){
+export default function Shop({items, user, bought, buyItem}){
 
     const [selection, setSelection] = useState('all')
 
     const filteredItems = () => {
         
         if (selection === 'all'){
-            return items.map(itemObj => <ItemCard key={itemObj.id} item={itemObj}/>)
+            return items.map(itemObj => <ItemCard bought={bought} buyItem={buyItem} user={user}  key={itemObj.id} item={itemObj}/>)
         }else{
             const filterSelection  = selection.replace('s', '')
             const filtered = items.filter(itemObj => itemObj.kind === filterSelection)
-            return filtered.map(itemObj => <ItemCard key={itemObj.id} item={itemObj}/>)
+            return filtered.map(itemObj => <ItemCard bought={bought} buyItem={buyItem} user={user} key={itemObj.id} item={itemObj}/>)
         }
     }
 
@@ -25,9 +25,10 @@ export default function Shop({items}){
     }
 
     return(
-        <div className="shop">
+        <div className="center">
             <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
             {filteredItems()}
         </div>
     )
 }
+

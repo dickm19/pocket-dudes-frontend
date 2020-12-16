@@ -4,7 +4,7 @@ import NewPetModal from './NewPetModal'
 
 export default function Home({ user,  currentPet }){
     return(
-        <div className="home">
+        <div className="center">
             {currentPet ? 
                 <PetCard pet={currentPet} />
                 :
