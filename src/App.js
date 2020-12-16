@@ -2,7 +2,7 @@ import React, { Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './Components/Home'
 import PetsContainer from './Containers/PetsContainer'
-//import Shop from './Containers/Shop'
+import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
 import { connect } from 'react-redux'
 
@@ -11,14 +11,26 @@ import './App.css';
 class App extends Component {
 
   state = {
-    user: null
+    user: null,
+    itmes: {}
   }
 
   componentDidMount(){
-    fetch('http://localhost:5000/api/v1/users/1')
-          .then(resp => resp.json())
-          .then(data => this.setState({user: data}))
+   this.fetchItems()
+   this.fetchUser()
+    
+  }
 
+  fetchUser = () => {
+    fetch('http://localhost:5000/api/v1/users/1')
+    .then(resp => resp.json())
+    .then(data => this.setState({user: data}))
+  }
+
+  fetchItems = () => {
+    fetch('http://localhost:5000/api/v1/items')
+          .then(resp => resp.json())
+          .then(data => this.setState({items: data}))  
   }
   
   render(){
@@ -54,13 +66,13 @@ class App extends Component {
               <PetsContainer currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
-          {/* <Route
+          <Route
             exact
             path="/shop"
             render={() => 
-              <Shop currentPet={this.props.currentPet} user={this.state.user}/>
+              <Shop items={this.state.items} currentPet={this.props.currentPet} user={this.state.user}/>
             }
-          /> */}
+          />
   
           {/* modal */}
             {/* <NewPetModal/> */}
