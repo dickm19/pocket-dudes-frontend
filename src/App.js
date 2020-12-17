@@ -30,11 +30,14 @@ class App extends Component {
     fetch('http://localhost:5000/api/v1/users/1')
     .then(resp => resp.json())
     .then(data => {
+      const owned = data.user.user_items.map(user_item => user_item.item)
       this.setState({
         user: data.user,
-        bought: data.user.items,
+        bought: owned,
         pets: data.user.pets
-      })})
+      })
+      // return console.log(data.user)
+    })
   }
   fetchImages = () => {
     fetch("http://localhost:5000/api/v1/pet_image_urls")
@@ -51,58 +54,39 @@ class App extends Component {
   }
 
   buyItem = (item) => {
-    fetch(`http://localhost:5000/api/v1/items/${item.id}`, {
-           method: 'PATCH',
+  
+    fetch(`http://localhost:5000/api/v1/user_items`, {
+           method: 'POST',
            headers: {
                'Content-Type': 'application/json',
                'Accepts': 'application/json'
            },
-           body: JSON.stringify({user_id: this.state.user.id})
+           body: JSON.stringify({
+             user_id: this.state.user.id,
+             item_id: item.id
+            })
        })
        .then(resp => resp.json())
-       .then(() => this.setState({user: item.user}))
+       .then(() => this.setState({bought: [...this.state.bought, item]}, console.log(item)))
   }
 
-  useToy = () => {
-    
-    const toy = this.state.user.items.find(item => item.kind === 'toy' )
-    fetch(`http://localhost:5000/api/v1/items/${toy.id}`, {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({user_id: null})
-        })
-        .then(resp => resp.json())
-        .then(() => {
-          const boughtCopy = [...this.state.bought]
-          const index = boughtCopy.findIndex(item => item === toy)
-          boughtCopy.splice(index, 1)
-          this.setState({bought: boughtCopy})
-          window.location.reload(false)
-        })
+  useToy = (user_toy) => {
+    // const toy = this.state.user.user_items.find(user_item => user_item.item.kind === 'toy' )
+    const boughtCopy = [...this.state.bought]
+    const index = boughtCopy.findIndex(item => item === user_toy.item)
+    boughtCopy.splice(index, 1)
+    this.setState({bought: boughtCopy})
+          // window.location.reload(false)
+
   }
   
-  useFood = () => {
-    const food = this.state.user.items.find(item => item.kind === 'food' )
-    
-    fetch(`http://localhost:5000/api/v1/items/${food.id}`, {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({user_id: null})
-        })
-        .then(resp => resp.json())
-        .then(() => {
-          const boughtCopy = [...this.state.bought]
-          const index = boughtCopy.findIndex(item => item === food)
-          boughtCopy.splice(index, 1)
-          this.setState({bought: boughtCopy})
-          window.location.reload(false)
-        })
+  useFood = (user_food) => {
+    // const food = this.state.user.user_items.find(user_item => user_item.item.kind === 'food' )
+    const boughtCopy = [...this.state.bought]
+    const index = boughtCopy.findIndex(item => item === user_food.item)
+    boughtCopy.splice(index, 1)
+    this.setState({bought: boughtCopy})
+  
   }
 
   handleFormSubmit = (petObj) => {
@@ -123,15 +107,16 @@ class App extends Component {
     })
     .then(resp => resp.json())
     .then((data) => {
-      this.setState({pets: [...this.state.pets, data]}, ()=>{
-        this.props.history.push('/pets')
-        window.location.reload(false)
-      })
+        this.setState({pets: [...this.state.pets, data]}, ()=>{
+          this.props.history.push('/pets')
+          window.location.reload(false)
+        })
+      
     })
   }
   
   render(){
-
+    //console.log(this.state.bought)
     return (
       <div>
 
@@ -166,7 +151,7 @@ class App extends Component {
             exact
             path="/pets"
             render={() => 
-              <PetsContainer bought={this.state.bought} pets={this.state.pets} useFood={this.useFood} useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
+              <PetsContainer history={this.props.history} bought={this.state.bought} pets={this.state.pets} useFood={this.useFood} useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
           <Route

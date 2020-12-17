@@ -14,59 +14,78 @@ class PetCard extends React.Component{
 
 
     componentDidMount(){
-        this.decrementPetCount()
+        setInterval(() => {
+            this.decrementPetCount()
+
+        }, 1*15000)
     }
 
 
     decrementPetCount = () => {
         
-        setInterval(() => {
-            if (this.state.happiness > 0 && this.state.hunger > 0){
-                this.decrementPet()
-                window.location.reload(false);
+            if (this.state.happiness > 0){
+                this.decrementPetHappiness()
             }
-        }, 1*15000);
+            if (this.state.hunger > 0){
+                this.decrementPetHunger()
+            }
+            //window.location.reload(false);
+
     }
 
     feedPet(){
-        if (this.props.pet.hunger < 10){
-
-            
-            fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
+        const boughtFood = this.props.user.user_items.filter(user_item => user_item.item.kind === 'food')
+        const user_food = boughtFood[0]
+        console.log(boughtFood[0])
+        // debugger
+        if (this.props.pet.hunger < 10 && boughtFood.length > 0){
+            Promise.all([
+              fetch(`http://localhost:5000/api/v1/user_items/${user_food.id}`, {
+                method: 'DELETE'
+               }),
+              fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accepts': 'application/json'
+                  'Content-Type': 'application/json',
+                  'Accepts': 'application/json'
                 },
-                body: JSON.stringify({
-                    hunger: this.state.hunger + 1
+                body: JSON.stringify({hunger: this.state.hunger + 1})
                 })
-            })
-            .then(resp => resp.json())
-            .then(() => this.setState({hunger: this.state.hunger + 1}))
-            this.props.useFood()
-            
-
+              ]).then(([userItemResp, petResp ]) => {
+                userItemResp.json()
+                petResp.json()
+              }).then(() => {
+                  this.setState({hunger: this.state.hunger + 1})
+                  this.props.useFood(user_food)
+                })
         }
     }
 
     playWithPet(){
-        if (this.props.pet.happiness < 10){
+        const boughtToy = this.props.user.user_items.filter(user_item => user_item.item.kind === 'toy')
+        const user_toy = boughtToy[0]
+        console.log(boughtToy[0])
+        if (this.props.pet.happiness < 10 && boughtToy.length > 0){
+        Promise.all([
+            fetch(`http://localhost:5000/api/v1/user_items/${user_toy.id}`, {
+                method: 'DELETE'
+            }),
             fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accepts': 'application/json'
+                  'Content-Type': 'application/json',
+                  'Accepts': 'application/json'
                 },
-                body: JSON.stringify({
-                    happiness: this.state.happiness + 1
+                body: JSON.stringify({happiness: this.state.happiness + 1})
                 })
+            ]).then(([userItemResp, petResp ]) => {
+                userItemResp.json()
+                petResp.json()
+            }).then(() => {
+                this.setState({happiness: this.state.happiness + 1})
+                this.props.useToy(user_toy)
             })
-            .then(resp => resp.json())
-            .then(() => this.setState({happiness: this.state.happiness + 1}))
         
-            this.props.useToy()
-            
         }
     }
 
@@ -77,11 +96,33 @@ class PetCard extends React.Component{
         return setCurrentPet(this.props.pet)
     }
 
-    decrementPet = () => {
-            
-            const decrementedHappiness = this.state.happiness - 1
-            const decrementedHunger = this.state.hunger - 1
+    decrementPetHappiness = () => {
+            if (this.state.happiness > 0){
 
+                const decrementedHappiness = this.state.happiness - 1
+    
+                fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accepts': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        happiness: decrementedHappiness
+                    })
+                })
+                .then( resp => resp.json())
+                .then(() => {
+                    this.setState({
+                        happiness: decrementedHappiness
+                    })})
+            }
+    }
+
+    decrementPetHunger = () => {
+        if (this.state.hunger > 0){
+
+            const decrementedHunger = this.state.hunger - 1
             fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
                 method: 'PATCH',
                 headers: {
@@ -89,18 +130,16 @@ class PetCard extends React.Component{
                     'Accepts': 'application/json'
                 },
                 body: JSON.stringify({
-                    happiness: decrementedHappiness,
                     hunger: decrementedHunger
                 })
             })
             .then( resp => resp.json())
             .then(() => {
                 this.setState({
-                    happiness: decrementedHappiness,
                     hunger: decrementedHunger
                 })})
+        }
     }
-
 
 
     render(){

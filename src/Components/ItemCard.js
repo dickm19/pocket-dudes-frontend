@@ -4,8 +4,9 @@ function ItemCard({item, buyItem, bought}){
 
 
    const localBuyItem = () => {
+    //    console.log(item)
        buyItem(item)
-       window.location.reload(false)
+    //    window.location.reload(false)
        
    }
     
