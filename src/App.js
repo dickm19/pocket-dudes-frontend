@@ -4,8 +4,8 @@ import Home from './Components/Home'
 import PetsContainer from './Containers/PetsContainer'
 import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
-import ItemBar from './Containers/ItemBar'
 import { connect } from 'react-redux'
+import AdoptPet from './Components/AdoptPet'
 
 import './App.css';
 
@@ -14,12 +14,14 @@ class App extends Component {
   state = {
     user: null,
     items: [],
-    bought: []
+    bought: [],
+    images: []
   }
 
   componentDidMount(){
    this.fetchItems()
    this.fetchUser()
+   this.fetchImages()
     
   }
 
@@ -28,9 +30,16 @@ class App extends Component {
     .then(resp => resp.json())
     .then(data => {
       this.setState({
-      user: data.user,
-      bought: data.user.items
-    })})
+        user: data.user,
+        bought: data.user.items
+      })})
+  }
+  fetchImages = () => {
+    fetch("http://localhost:5000/api/v1/pet_image_urls")
+        .then(resp => resp.json())
+        .then(data => {
+            this.setState({images: data})
+        })
   }
 
   fetchItems = () => {
@@ -67,6 +76,7 @@ class App extends Component {
             body: JSON.stringify({user_id: null})
         })
         .then(resp => resp.json())
+        .then(() => window.location.reload(false))
   }
   
   useFood = () => {
@@ -84,6 +94,27 @@ class App extends Component {
             body: JSON.stringify({user_id: null})
         })
         .then(resp => resp.json())
+        .then(() => window.location.reload(false))
+  }
+
+  handleFormSubmit = (petObj) => {
+    fetch("http://localhost:5000/api/v1/pets", {
+      method: 'POST',
+      headers: {
+        "Content-Type": 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        name: petObj.name,
+        age: petObj.age,
+        happiness: 10,
+        hunger: 10,
+        pet_image_url_id: petObj.pet_image_url_id,
+        user_id: petObj.user_id
+      })
+    })
+    .then(resp => resp.json())
+    .then(() => window.location.reload(false))
   }
   
   render(){
@@ -96,7 +127,6 @@ class App extends Component {
            
           (<div className="App">
           <NavBar/>
-          <ItemBar buyItem={this.buyItem} bought={this.state.bought} user={this.state.user}/>
           <Route
             exact
             path="/"
@@ -104,19 +134,26 @@ class App extends Component {
               <Redirect to="/home" />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/home"
             render={() => 
               
               <Home useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
             }
-          />
+          /> */}
+          <Route
+            exact
+            path="/adopt"
+            render={()=>
+              <AdoptPet handleFormSubmit={this.handleFormSubmit} images={this.state.images} user={this.state.user}/>
+            }
+            />
           <Route
             exact
             path="/pets"
             render={() => 
-              <PetsContainer useFood={this.useFood} useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
+              <PetsContainer bought={this.state.bought} useFood={this.useFood} useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
           <Route

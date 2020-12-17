@@ -1,10 +1,11 @@
 import React from 'react'
 
-function ItemCard({item, buyItem, bought, user}){
+function ItemCard({item, buyItem, bought}){
 
 
    const localBuyItem = () => {
        buyItem(item)
+       window.location.reload(false)
        
    }
     

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Dropdown from 'react-dropdown';
 import ItemCard from '../Components/ItemCard'
+import ItemBar from './ItemBar'
 import 'react-dropdown/style.css';
 
 export default function Shop({items, user, bought, buyItem}){
@@ -25,7 +26,9 @@ export default function Shop({items, user, bought, buyItem}){
     }
 
     return(
-        <div className="center">
+
+        <div className="shop">
+            <ItemBar bought={bought} user={user}/>
             <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
             {filteredItems()}
         </div>

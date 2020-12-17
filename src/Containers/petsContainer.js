@@ -1,7 +1,7 @@
 import React from 'react'
 import PetCard from '../Components/PetCard'
-
-export default function PetsContainer({user, useToy, useFood}){
+import ItemBar from './ItemBar'
+export default function PetsContainer({user, useToy, useFood, bought}){
 
     const renderPets = () => {
         return user ? user.pets.map(petObj => <PetCard useFood={useFood} useToy={useToy} key={petObj.id} pet={petObj}/>) : null
@@ -9,6 +9,7 @@ export default function PetsContainer({user, useToy, useFood}){
 
     return(
         <div className="petsContainer">
+             <ItemBar bought={bought} user={user}/>
             {user ? 
                 renderPets()
             : 
