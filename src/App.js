@@ -62,11 +62,8 @@ class App extends Component {
   }
 
   useToy = () => {
+    
     const toy = this.state.user.items.find(item => item.kind === 'toy' )
-    const boughtCopy = [...this.state.bought]
-    const index = boughtCopy.findIndex(item => item === toy)
-    boughtCopy.splice(index, 1)
-    this.setState({bought: boughtCopy})
     fetch(`http://localhost:5000/api/v1/items/${toy.id}`, {
             method: 'PATCH',
             headers: {
@@ -76,15 +73,18 @@ class App extends Component {
             body: JSON.stringify({user_id: null})
         })
         .then(resp => resp.json())
-        .then(() => window.location.reload(false))
+        .then(() => {
+          const boughtCopy = [...this.state.bought]
+          const index = boughtCopy.findIndex(item => item === toy)
+          boughtCopy.splice(index, 1)
+          this.setState({bought: boughtCopy})
+          // window.location.reload(false)
+        })
   }
   
   useFood = () => {
     const food = this.state.user.items.find(item => item.kind === 'food' )
-    const boughtCopy = [...this.state.bought]
-    const index = boughtCopy.findIndex(item => item === food)
-    boughtCopy.splice(index, 1)
-    this.setState({bought: boughtCopy})
+    
     fetch(`http://localhost:5000/api/v1/items/${food.id}`, {
             method: 'PATCH',
             headers: {
@@ -94,7 +94,13 @@ class App extends Component {
             body: JSON.stringify({user_id: null})
         })
         .then(resp => resp.json())
-        .then(() => window.location.reload(false))
+        .then(() => {
+          const boughtCopy = [...this.state.bought]
+          const index = boughtCopy.findIndex(item => item === food)
+          boughtCopy.splice(index, 1)
+          this.setState({bought: boughtCopy})
+          //window.location.reload(false)
+        })
   }
 
   handleFormSubmit = (petObj) => {

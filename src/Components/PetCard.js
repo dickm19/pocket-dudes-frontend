@@ -23,7 +23,7 @@ class PetCard extends React.Component{
         setInterval(() => {
             if (this.state.happiness > 0 && this.state.hunger > 0){
                 this.decrementPet()
-                window.location.reload(false);
+                //window.location.reload(false);
             }
         }, 1*15000);
     }
@@ -31,7 +31,7 @@ class PetCard extends React.Component{
     feedPet(){
         if (this.props.pet.hunger < 10){
 
-            this.setState({hunger: this.state.hunger + 1})
+            
             fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
                 method: 'PATCH',
                 headers: {
@@ -39,10 +39,11 @@ class PetCard extends React.Component{
                     'Accepts': 'application/json'
                 },
                 body: JSON.stringify({
-                    hunger: this.props.pet.hunger + 1
+                    hunger: this.state.hunger + 1
                 })
             })
             .then(resp => resp.json())
+            .then(() => this.setState({hunger: this.state.hunger + 1}))
             this.props.useFood()
             
 
@@ -51,7 +52,6 @@ class PetCard extends React.Component{
 
     playWithPet(){
         if (this.props.pet.happiness < 10){
-            this.setState({happiness: this.state.happiness + 1})
             fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
                 method: 'PATCH',
                 headers: {
@@ -59,10 +59,11 @@ class PetCard extends React.Component{
                     'Accepts': 'application/json'
                 },
                 body: JSON.stringify({
-                    happiness: this.props.pet.happiness + 1
+                    happiness: this.state.happiness + 1
                 })
             })
             .then(resp => resp.json())
+            .then(() => this.setState({happiness: this.state.happiness + 1}))
         
             this.props.useToy()
             
@@ -81,7 +82,7 @@ class PetCard extends React.Component{
             const decrementedHappiness = this.state.happiness - 1
             const decrementedHunger = this.state.hunger - 1
 
-            fetch(`http://localhost:5000/api/v1/pets/1`, {
+            fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -103,7 +104,6 @@ class PetCard extends React.Component{
 
 
     render(){
-       
         
         return(
             <div  className='pet-card'>

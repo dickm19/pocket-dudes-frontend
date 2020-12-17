@@ -15,8 +15,6 @@ export default class AdoptPet extends React.Component{
             return this.setState({count: 0})
         }else if (this.state.count < this.props.images.length){
             return this.setState({count: this.state.count + 1})
-            
-
         }
     }
 
@@ -31,14 +29,12 @@ export default class AdoptPet extends React.Component{
             pet_image_url_id: this.props.images[this.state.count].id,
             user_id: this.props.user.id
         }
-        // console.log(petObj)
         this.props.handleFormSubmit(petObj)
     }
 
     handleNameChange = (e) => {
         return this.setState({name: e.target.value})
        
-
     }
 
 
