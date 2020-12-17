@@ -15,7 +15,8 @@ class App extends Component {
     user: null,
     items: [],
     bought: [],
-    images: []
+    images: [],
+    pets: []
   }
 
   componentDidMount(){
@@ -31,7 +32,8 @@ class App extends Component {
     .then(data => {
       this.setState({
         user: data.user,
-        bought: data.user.items
+        bought: data.user.items,
+        pets: data.user.pets
       })})
   }
   fetchImages = () => {
@@ -78,7 +80,7 @@ class App extends Component {
           const index = boughtCopy.findIndex(item => item === toy)
           boughtCopy.splice(index, 1)
           this.setState({bought: boughtCopy})
-          // window.location.reload(false)
+          window.location.reload(false)
         })
   }
   
@@ -99,7 +101,7 @@ class App extends Component {
           const index = boughtCopy.findIndex(item => item === food)
           boughtCopy.splice(index, 1)
           this.setState({bought: boughtCopy})
-          //window.location.reload(false)
+          window.location.reload(false)
         })
   }
 
@@ -120,7 +122,12 @@ class App extends Component {
       })
     })
     .then(resp => resp.json())
-    .then(() => window.location.reload(false))
+    .then((data) => {
+      this.setState({pets: [...this.state.pets, data]}, ()=>{
+        this.props.history.push('/pets')
+        window.location.reload(false)
+      })
+    })
   }
   
   render(){
@@ -137,7 +144,7 @@ class App extends Component {
             exact
             path="/"
             render={() =>
-              <Redirect to="/home" />
+              <Redirect to="/adopt" />
             }
           />
           {/* <Route
@@ -159,7 +166,7 @@ class App extends Component {
             exact
             path="/pets"
             render={() => 
-              <PetsContainer bought={this.state.bought} useFood={this.useFood} useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
+              <PetsContainer bought={this.state.bought} pets={this.state.pets} useFood={this.useFood} useToy={this.useToy} currentPet={this.props.currentPet} user={this.state.user}/>
             }
           />
           <Route

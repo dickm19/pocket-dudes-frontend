@@ -23,7 +23,7 @@ class PetCard extends React.Component{
         setInterval(() => {
             if (this.state.happiness > 0 && this.state.hunger > 0){
                 this.decrementPet()
-                //window.location.reload(false);
+                window.location.reload(false);
             }
         }, 1*15000);
     }
@@ -104,7 +104,6 @@ class PetCard extends React.Component{
 
 
     render(){
-        
         return(
             <div  className='pet-card'>
                 <p>{this.props.pet.name}</p>
