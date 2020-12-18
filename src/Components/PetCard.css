@@ -2,3 +2,7 @@
     height: 200px;
     width: 150px;
 }
+
+.care-button{
+    border-radius: 20%;
+}

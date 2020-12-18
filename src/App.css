@@ -1,3 +1,19 @@
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: minmax(500px, auto);
+}
+
+
+.navbar{
+  /* display: grid; */
+  /* grid-template-rows: ; */
+  grid-column: 1;
+  grid-row: 1/5;
+
+}
+
+.item-bar{
+  grid-column: 4;
+  /* grid-row: 1 / 5; */
 }

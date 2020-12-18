@@ -1,18 +1,19 @@
 import React from 'react'
 import PetCard from '../Components/PetCard'
 import ItemBar from './ItemBar'
-export default function PetsContainer({user, useToy, useFood, bought, pets}){
+export default function PetsContainer({user, useToy, useFood, boughtItems, bought, pets, history}){
 
     const renderPets = () => {
-        // console.log(pets)
-        return user ? pets.map(petObj => <PetCard useFood={useFood} useToy={useToy} key={petObj.id} pet={petObj}/>) : null
+        console.log(bought)
+        return pets.length > 0 ? pets.map(petObj => <PetCard bought={bought} useFood={useFood} user={user} useToy={useToy} key={petObj.id} pet={petObj}/>)  : history.push('/adopt')
     }
 
     return(
         <div className="petsContainer">
-             <ItemBar bought={bought} user={user}/>
+             <ItemBar boughtItems={boughtItems} user={user}/>
             {user ? 
                 renderPets()
+                
             : 
             <h2>Loading</h2>
             }
