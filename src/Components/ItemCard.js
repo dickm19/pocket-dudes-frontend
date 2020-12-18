@@ -5,6 +5,7 @@ function ItemCard({item, buyItem, boughtItems}){
     const [bought, setBought] = useState(false)
 
    const localBuyItem = () => {
+    //    console.log(item)
        buyItem(item)
         setBought(true)
    }

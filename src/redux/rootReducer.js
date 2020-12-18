@@ -3,20 +3,12 @@ import { combineReducers } from "redux";
 const defaultState = {
     // petsApi: [],
     currentPet: null,
-    bought: []
+    bought: [],
+    user: {},
+    pets: []
     
 }
 
-// function petsApiReducer(state = defaultState.petsApi, action) {
-//     switch (action.type) {
-//         case "FETCH_PETS":
-//             return action.payload
-//         case "ADD_PET":
-//             return [...state, action.payload]
-//         default:
-//             return state;
-//     }
-// }
 
 
 function currentPetReducer( state = defaultState.currentPet, action){
@@ -30,7 +22,27 @@ function currentPetReducer( state = defaultState.currentPet, action){
 
 function boughtReducer( state = defaultState.bought, action){
     switch (action.type){
-        case 'BUY_ITEM':
+        case 'GET_BOUGHT':
+            return [...state, action.payload]
+        default:
+            return state
+    }
+}
+
+function userReducer( state = defaultState.user, action){
+    switch (action.type){
+        case 'GET_USER':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+function petsReducer(state = defaultState.pets, action){
+    switch (action.type){
+        case 'GET_PETS':
+            return action.payload
+        case 'ADD_PET':
             return [...state, action.payload]
         default:
             return state
@@ -40,7 +52,9 @@ function boughtReducer( state = defaultState.bought, action){
 const rootReducer = combineReducers({
     // petsApi: petsApiReducer,
     currentPet: currentPetReducer,
-    bought: boughtReducer
+    bought: boughtReducer,
+    user: userReducer,
+    pets: petsReducer
   });
   
 
