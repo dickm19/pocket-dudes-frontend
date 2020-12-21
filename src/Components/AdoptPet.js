@@ -1,5 +1,6 @@
 import React from 'react'
 import { addPet } from '../redux/actions';
+import { connect } from 'react-redux'
 
 class AdoptPet extends React.Component{
 
@@ -21,6 +22,7 @@ class AdoptPet extends React.Component{
                 this.setState({images: data})
             })
       }
+
     handleImgClick = () => {
         if (this.state.count === (this.state.images.length - 1)){
             return this.setState({count: 0})
@@ -40,7 +42,8 @@ class AdoptPet extends React.Component{
             pet_image_url_id: this.state.images[this.state.count].id,
             user_id: this.props.user.id
         }
-        return addPet(petObj, user)
+         this.props.addPet(petObj)
+         this.props.history.push('/pets')
     }
 
     handleNameChange = (e) => {
@@ -56,7 +59,7 @@ class AdoptPet extends React.Component{
                     Click to choose an image<br/>
                     {this.state.images.length > 0 ?
                         <div className='adopt-pet-img'>
-                            <img onClick={ this.handleImgClick} src={this.state.images[this.state.count].image_url} alt='pet'/><br/>
+                            <img onClick={() => this.handleImgClick()} src={this.state.images[this.state.count].image_url} alt='pet'/><br/>
                         </div>
                     :
                         null
@@ -73,7 +76,7 @@ class AdoptPet extends React.Component{
 
 function mdp(dispatch) {
     return { 
-        addPet: (pet, user) => dispatch(addPet(pet,user))
+        addPet: (pet) => dispatch(addPet(pet))
      }
 }
 

@@ -6,13 +6,41 @@ const defaultState = {
     bought: [],
     user: null,
     pets: [],
-    items: []
+    items: [],
+    happiness: null,
+    hunger: null
     
 }
 
 function itemsReducer(state = defaultState.items, action){
     switch(action.type){
         case "GET_ITEMS":
+            return action.payload
+        default:
+            return state
+    }
+}
+
+function happinessReducer(state = defaultState.happiness, action){
+    switch(action.type) {
+        case "GET_PET_HAPPINESS":
+            return action.payload
+        case 'DECREMENT_HAPPINESS':
+            return action.payload
+        case 'INCREMENT_HAPPINESS':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+function hungerReducer(state = defaultState.hunger, action){
+    switch(action.type) {
+        case "GET_PET_HUNGER":
+            return action.payload
+        case 'DECREMENT_HUNGER':
+            return action.payload
+        case 'INCREMENT_HUNGER':
             return action.payload
         default:
             return state
@@ -27,6 +55,12 @@ function currentPetReducer( state = defaultState.currentPet, action){
             return action.payload
         case 'PLAY_WITH_PET':
             return action.payload
+        case 'DECREMENT_PET_HAPPINESS':
+            return action.payload
+        case 'DECREMENT_PET_HUNGER':
+            return action.payload
+        case 'UNSET_CURRENT_PET':
+                return action.payload
         default:
             return state;
     }
@@ -37,7 +71,7 @@ function boughtReducer( state = defaultState.bought, action){
         case 'GET_BOUGHT':
             return  action.payload
         case 'BUY_ITEM':
-            [...state, action.payload]
+            return [...state, action.payload]
         case 'USE_ITEM':
             const boughtCopy = [...state]
             const index = boughtCopy.findIndex(item => item === action.payload)
@@ -74,7 +108,9 @@ const rootReducer = combineReducers({
     bought: boughtReducer,
     user: userReducer,
     pets: petsReducer,
-    items: itemsReducer
+    items: itemsReducer,
+    happiness: happinessReducer,
+    hunger: hungerReducer
   });
   
 

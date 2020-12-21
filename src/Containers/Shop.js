@@ -4,19 +4,21 @@ import ItemCard from '../Components/ItemCard'
 import ItemBar from './ItemBar'
 import 'react-dropdown/style.css';
 
- function Shop({items, user, boughtItems}){
+ export default function Shop({items, user, bought}){
 
     const [selection, setSelection] = useState('all')
 
+    const boughtItems = bought.map(user_item => user_item.item)
     const filteredItems = () => {
+        console.log(bought)
         if (selection === 'all'){
             return items.map(itemObj => {
-                   return <ItemCard boughtItems={boughtItems} buyItem={buyItem} user={user}  key={itemObj.id} item={itemObj}/>
+                   return <ItemCard boughtItems={boughtItems} user={user} key={itemObj.id} item={itemObj}/>
             })
         }else{
             const filterSelection  = selection.replace('s', '')
             const filtered = items.filter(itemObj => itemObj.kind === filterSelection)
-            return filtered.map(itemObj => <ItemCard boughtItems={boughtItems} buyItem={buyItem} user={user} key={itemObj.id} item={itemObj}/>)
+            return filtered.map(itemObj => <ItemCard boughtItems={boughtItems} user={user} key={itemObj.id} item={itemObj}/>)
         }
     }
 
@@ -29,7 +31,7 @@ import 'react-dropdown/style.css';
     return(
 
         <div className="shop">
-            <ItemBar boughtItems={boughtItems} user={user}/>
+            <ItemBar bought={boughtItems} user={user}/>
             <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
             {filteredItems()}
         </div>

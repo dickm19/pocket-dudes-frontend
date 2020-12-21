@@ -1,19 +1,19 @@
 import React, {useState} from 'react'
 import { buyItem } from '../redux/actions';
+import { connect } from 'react-redux'
 
-function ItemCard({item}){
-
-    const [bought, setBought] = useState(false)
+function ItemCard({item, boughtItems, user, buyItem}){
+    
+    const [bought, setBought] = useState(boughtItems.includes(item))
 
     const localBuyItem = () => {
-       setBought(true)
+        // console.log(buyItem)
+       setBought(!boughtItems.includes(item))
        return buyItem(item, user)
    }
 
-//    const checkBought = () => {
-//        return boughtItems.includes(item) ? null : console.log(boughtItems)
-//    }
         return(
+            
             <div className='item-card'>
                 {/* {checkBought()} */}
                 <img src={item.image} alt={item.name}/>

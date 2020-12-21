@@ -1,10 +1,10 @@
 import React from 'react'
 import ItemCard from '../Components/ItemCard'
 
-export default function ItemBar({user, boughtItems}) {
+export default function ItemBar({user, bought}) {
 
     const renderItems = () => {
-        return boughtItems.map(itemObj => <ItemCard boughtItems={boughtItems} user={user} key={itemObj.id} item={itemObj}/>)
+        return bought.map(itemObj => <ItemCard boughtItems={bought} user={user} key={itemObj.id} item={itemObj}/>)
         
     }
 

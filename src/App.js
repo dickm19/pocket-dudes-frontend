@@ -1,12 +1,12 @@
 import React, { Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom';
-// import Home from './Components/Home'
+import Home from './Components/Home'
 import PetsContainer from './Containers/PetsContainer'
 import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
 import { connect } from 'react-redux'
 import AdoptPet from './Components/AdoptPet'
-import { getBought, getItems, getUser, getPets } from '../redux/actions';
+import { getBought, getItems, getUser, getPets } from './redux/actions';
 import './App.css';
 
 class App extends Component {
@@ -16,69 +16,63 @@ class App extends Component {
   }
 
   componentDidMount(){
-
-    getUser(),
-    getPets(),
-    getBought(),
-    getItems()
+    // console.log("in CDM")
+    this.props.getUser()
+    this.props.getPets(this.props.user)
+    this.props.getBought(this.props.user)
+    this.props.getItems()
   }
   
   render(){
+    
     return (
+      
       <div>
-
-        { this.props.user
-           ?
-          (<div className="App">
+      {this.props.user ? 
+          <div className="App">
           <NavBar/>
           <Route
             exact
             path="/"
             render={() =>
-              {this.props.pets.length > 0 
-              ?
                 <Redirect to="/pets" />
-              :
-                <Redirect to="/adopt" />
-              }
             }
           />
           <Route
             exact
             path="/home"
             render={() => 
-              <Home currentPet={this.props.currentPet} user={this.props.user}/>
+              <Home happiness={this.props.happiness} hunger={this.props.hunger} history={this.props.history} bought={this.props.bought} currentPet={this.props.currentPet} user={this.props.user}/>
             }
           />
           <Route
             exact
             path="/adopt"
             render={()=>
-              <AdoptPet user={this.props.user}/>
+              <AdoptPet history={this.props.history} user={this.props.user}/>
             }
             />
           <Route
             exact
             path="/pets"
             render={() => 
-              <PetsContainer history={this.props.history} bought={this.props.bought} pets={this.props.pets} currentPet={this.props.currentPet} user={this.props.user}/>
+              <PetsContainer happiness={this.props.happiness} hunger={this.props.hunger} history={this.props.history} bought={this.props.bought} pets={this.props.pets} currentPet={this.props.currentPet} user={this.props.user}/>
             }
           />
           <Route
             exact
             path="/shop"
             render={() => 
-              <Shop  bought={this.props.bought} items={this.props.items} currentPet={this.props.currentPet} user={this.props.user}/>
+              <Shop  bought={this.props.bought} items={this.props.items} user={this.props.user}/>
             }
           />
   
-          {/* modal */}
-            {/* <NewPetModal/> */}
-            </div>)
+           </div>
+            
             :
-            null
-        }
-      </div>
+            'LOADING'
+          }
+          </div>
         
     );
   }
@@ -91,7 +85,9 @@ function msp(state) {
       bought: state.bought,
       user: state.user,
       pets: state.pets,
-      items: state.items
+      items: state.items,
+      happiness: state.happiness,
+      hunger: state.hunger
   }
 }
 
