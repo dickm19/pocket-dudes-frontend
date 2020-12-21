@@ -5,11 +5,19 @@ const defaultState = {
     currentPet: null,
     bought: [],
     user: {},
-    pets: []
+    pets: [],
+    items: []
     
 }
 
-
+function itemsReducer(state = defaultState.items, action){
+    switch(action.type){
+        case "GET_ITEMS":
+            return action.payload
+        default:
+            return state
+    }
+}
 
 function currentPetReducer( state = defaultState.currentPet, action){
     switch (action.type) {
@@ -23,7 +31,9 @@ function currentPetReducer( state = defaultState.currentPet, action){
 function boughtReducer( state = defaultState.bought, action){
     switch (action.type){
         case 'GET_BOUGHT':
-            return [...state, action.payload]
+            return  action.payload
+        case 'BUY_ITEM':
+            [...state, action.payload]
         default:
             return state
     }
@@ -54,7 +64,8 @@ const rootReducer = combineReducers({
     currentPet: currentPetReducer,
     bought: boughtReducer,
     user: userReducer,
-    pets: petsReducer
+    pets: petsReducer,
+    items: itemsReducer
   });
   
 

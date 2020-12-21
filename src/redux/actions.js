@@ -8,9 +8,21 @@ export function setCurrentPet(pet) {
     }
 }
 
-export function buyItem(item) {
+export function buyItem(item, user) {
     return function (dispatch){
-        dispatch({type: BUY_ITEM, payload: item})
+        fetch("localhost:5000/api/v1/user_items", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: {
+                user_id: user.id,
+                item_id: item.id
+            }
+        })
+        .then(data =>  dispatch({type: BUY_ITEM, payload: data}))
+        
     }
 }
 
@@ -34,7 +46,7 @@ export function getPets(user){
     }
 }
 
-export function addPet(petObj){
+export function addPet(petObj, user){
     return function(dispatch){
         fetch("http://localhost:5000/api/v1/pets", {
       method: 'POST',
@@ -48,7 +60,7 @@ export function addPet(petObj){
         happiness: 10,
         hunger: 10,
         pet_image_url_id: petObj.pet_image_url_id,
-        user_id: petObj.user_id
+        user_id: user.id
       })
     })
     .then(resp => resp.json())

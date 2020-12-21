@@ -183,7 +183,11 @@ class App extends Component {
 
 function msp(state) {
   return {
-      currentPet: state.currentPet
+      currentPet: state.currentPet,
+      bought: state.bought,
+      user: state.user,
+      pets: state.pets,
+      items: state.items
   }
 }
 
