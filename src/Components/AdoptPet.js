@@ -1,19 +1,30 @@
 import React from 'react'
+import { addPet } from '../redux/actions';
 
-export default class AdoptPet extends React.Component{
+class AdoptPet extends React.Component{
 
     state = {
         count: 0,
         image: {},
+        images: [],
         clicked: false,
         name: '',
     }
+    componentDidMount(){
+        this.fetchImages()
+    }
 
-
+    fetchImages = () => {
+        fetch("http://localhost:5000/api/v1/pet_image_urls")
+            .then(resp => resp.json())
+            .then(data => {
+                this.setState({images: data})
+            })
+      }
     handleImgClick = () => {
-        if (this.state.count === (this.props.images.length - 1)){
+        if (this.state.count === (this.state.images.length - 1)){
             return this.setState({count: 0})
-        }else if (this.state.count < this.props.images.length){
+        }else if (this.state.count < this.state.images.length){
             return this.setState({count: this.state.count + 1})
         }
     }
@@ -26,15 +37,14 @@ export default class AdoptPet extends React.Component{
             age: 1,
             happiness: 10,
             hunger: 10,
-            pet_image_url_id: this.props.images[this.state.count].id,
+            pet_image_url_id: this.state.images[this.state.count].id,
             user_id: this.props.user.id
         }
-        this.props.handleFormSubmit(petObj)
+        return addPet(petObj, user)
     }
 
     handleNameChange = (e) => {
         return this.setState({name: e.target.value})
-       
     }
 
 
@@ -44,9 +54,9 @@ export default class AdoptPet extends React.Component{
             <div className="adopt-pet">
                 <form onSubmit={this.handleFormSubmit} className="adopt-pet-form">
                     Click to choose an image<br/>
-                    {this.props.images.length > 0 ?
+                    {this.state.images.length > 0 ?
                         <div className='adopt-pet-img'>
-                            <img onClick={ this.handleImgClick} src={this.props.images[this.state.count].image_url} alt='pet'/><br/>
+                            <img onClick={ this.handleImgClick} src={this.state.images[this.state.count].image_url} alt='pet'/><br/>
                         </div>
                     :
                         null
@@ -60,3 +70,11 @@ export default class AdoptPet extends React.Component{
         )
     }
 }
+
+function mdp(dispatch) {
+    return { 
+        addPet: (pet, user) => dispatch(addPet(pet,user))
+     }
+}
+
+export default connect(null, mdp)(AdoptPet);

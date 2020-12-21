@@ -1,5 +1,5 @@
 import React from 'react'
-import { setCurrentPet } from '../redux/actions';
+import { feedPet, playWithPet, setCurrentPet, useItem } from '../redux/actions';
 import { connect } from 'react-redux'
 import './PetCard.css'
 
@@ -15,7 +15,6 @@ class PetCard extends React.Component{
     componentDidMount(){
         setInterval(() => {
             this.decrementPetCount()
-
         }, 1*15000)
     }
 
@@ -32,59 +31,22 @@ class PetCard extends React.Component{
 
     }
 
-    feedPet(){
+    localFeedPet = () => {
         const boughtFood = this.props.bought.filter(user_item => user_item.item.kind === 'food')
         const user_food = boughtFood[0]
-        // console.log(user_food)
-        // debugger
-        if (this.props.pet.hunger < 10 && boughtFood.length > 0){
-            Promise.all([
-              fetch(`http://localhost:5000/api/v1/user_items/${user_food.id}`, {
-                method: 'DELETE'
-               }),
-              fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
-                method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accepts': 'application/json'
-                },
-                body: JSON.stringify({hunger: this.state.hunger + 1})
-                })
-              ]).then(([userItemResp, petResp ]) => {
-                userItemResp.json()
-                petResp.json()
-              }).then(() => {
-                  this.setState({hunger: this.state.hunger + 1})
-                  this.props.useFood(user_food)
-                })
+        return function(){
+            feedPet(this.props.pet)
+            useItem(user_food)
         }
+     
     }
 
-    playWithPet(){
+    localPlayWithPet = () => {
         const boughtToy = this.props.bought.filter(user_item => user_item.item.kind === 'toy')
         const user_toy = boughtToy[0]
-        // console.log(user_toy)
-        // debugger
-        if (this.props.pet.happiness < 10 && boughtToy.length > 0){
-            Promise.all([
-              fetch(`http://localhost:5000/api/v1/user_items/${user_toy.id}`, {
-                method: 'DELETE'
-               }),
-              fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
-                method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accepts': 'application/json'
-                },
-                body: JSON.stringify({happiness: this.state.happiness + 1})
-                })
-              ]).then(([userItemResp, petResp ]) => {
-                userItemResp.json()
-                petResp.json()
-              }).then(() => {
-                  this.setState({happiness: this.state.happiness + 1})
-                  this.props.useToy(user_toy)
-                })
+        return function(){
+            playWithPet(this.props.pet)
+            useItem(user_toy)
         }
     }
 
@@ -149,13 +111,15 @@ class PetCard extends React.Component{
                 <p className='happiness'>Happiness: {this.state.happiness}/10</p>
                 <p className='hunger'>Hunger: {this.state.hunger}/10</p>
                
-                    {/* {this.state.clicked ?  */}
-                            <button className="care-button" onClick={() => this.feedPet()}>Feed</button>
-                            <button className="care-button" onClick={() => this.playWithPet()}>Play</button>
+                    {this.state.clicked ? 
+                    <div>
+                        <button className="care-button" onClick={() => this.localFeedPet()}>Feed</button>
+                        <button className="care-button" onClick={() => this.localPlayWithPet()}>Play</button>
+                    </div>
                        
-                    {/* {:
+                    :
                         null
-                    }} */}
+                    }
                 
             </div>
         )
@@ -164,7 +128,10 @@ class PetCard extends React.Component{
 
 function mdp(dispatch) {
     return { 
-        setCurrentPet: (pet) => dispatch(setCurrentPet(pet))
+        setCurrentPet: (pet) => dispatch(setCurrentPet(pet)),
+        feetPet: (pet) => dispatch(feedPet(pet)),
+        playWithPet: (pet) => dispatch(playWithPet(pet)),
+        useItem: (user_item) => dispatch(useItem(user_item))
        
      }
 }

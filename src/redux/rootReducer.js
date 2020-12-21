@@ -4,7 +4,7 @@ const defaultState = {
     // petsApi: [],
     currentPet: null,
     bought: [],
-    user: {},
+    user: null,
     pets: [],
     items: []
     
@@ -23,6 +23,10 @@ function currentPetReducer( state = defaultState.currentPet, action){
     switch (action.type) {
         case "SET_CURRENT_PET":
             return action.payload
+        case 'FEED_PET':
+            return action.payload
+        case 'PLAY_WITH_PET':
+            return action.payload
         default:
             return state;
     }
@@ -34,6 +38,11 @@ function boughtReducer( state = defaultState.bought, action){
             return  action.payload
         case 'BUY_ITEM':
             [...state, action.payload]
+        case 'USE_ITEM':
+            const boughtCopy = [...state]
+            const index = boughtCopy.findIndex(item => item === action.payload)
+            boughtCopy.splice(index, 1)
+            return boughtCopy
         default:
             return state
     }

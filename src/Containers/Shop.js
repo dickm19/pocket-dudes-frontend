@@ -4,7 +4,7 @@ import ItemCard from '../Components/ItemCard'
 import ItemBar from './ItemBar'
 import 'react-dropdown/style.css';
 
-export default function Shop({items, user, boughtItems, buyItem}){
+ function Shop({items, user, boughtItems}){
 
     const [selection, setSelection] = useState('all')
 
@@ -36,3 +36,5 @@ export default function Shop({items, user, boughtItems, buyItem}){
     )
 }
 
+
+  
