@@ -1,19 +1,37 @@
 .App {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: minmax(500px, auto);
+  grid-template-areas:  "navbar main main itembar"
+                        "navbar main main itembar"
+                        "navbar main main itembar"
+                        "navbar main main itembar";
+
+  background-color: pink;
 }
 
 
 .navbar{
-  /* display: grid; */
-  /* grid-template-rows: ; */
-  grid-column: 1;
-  grid-row: 1/5;
+  grid-area: navbar
+}
+
+
+.pets-container{
+  grid-area: main;
 
 }
 
 .item-bar{
-  grid-column: 4;
-  /* grid-row: 1 / 5; */
+  grid-area: itembar;
+  height: 475px;
+  overflow: scroll;
+}
+
+.item-bar .items-header{
+  text-align: center;
+
+}
+
+.shop{
+  grid-area: main;
+  height: 475px;
+  overflow: scroll;
 }

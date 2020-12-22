@@ -147,7 +147,7 @@ export function addPet(petObj){
             body: JSON.stringify(petObj)
         })
         .then(resp => resp.json())
-        .then(data => dispatch({type: ADD_PET, payload: data }))
+        .then(data => dispatch({type: ADD_PET, payload: data.pet }))
     }
 }
 

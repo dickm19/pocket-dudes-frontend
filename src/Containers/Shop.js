@@ -29,12 +29,15 @@ import 'react-dropdown/style.css';
     }
 
     return(
-
-        <div className="shop">
-            <ItemBar bought={boughtItems} user={user}/>
-            <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
-            {filteredItems()}
-        </div>
+        <> 
+            <div className='item-bar'>
+                <ItemBar bought={boughtItems} user={user}/>
+            </div>
+            <div className="shop">
+                <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
+                {filteredItems()}
+            </div>
+        </>
     )
 }
 

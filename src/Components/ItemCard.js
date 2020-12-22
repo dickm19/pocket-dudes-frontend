@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { buyItem } from '../redux/actions';
 import { connect } from 'react-redux'
-
+import './ItemCard.css'
 function ItemCard({item, boughtItems, user, buyItem}){
     
     const [bought, setBought] = useState(boughtItems.includes(item))
@@ -16,13 +16,13 @@ function ItemCard({item, boughtItems, user, buyItem}){
             
             <div className='item-card'>
                 {/* {checkBought()} */}
-                <img src={item.image} alt={item.name}/>
+                <img className="item-image" src={item.image} alt={item.name}/>
                 <p>{item.name}</p>
                 
                 {bought ? 
                     null
                 :
-                    <button onClick={localBuyItem}>Buy</button>
+                    <button className='buy-btn' onClick={localBuyItem}>Buy</button>
             }
             </div>
         )
