@@ -111,6 +111,7 @@ export function buyItem(item, user) {
     }
 }
 
+
 export function getUser(){
     return function(dispatch){
         fetch("http://localhost:5000/api/v1/users/1")

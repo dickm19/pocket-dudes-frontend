@@ -19,4 +19,11 @@
 }
 .buy-btn{
     border-radius: 20px;
+    background-color: plum;
+    color: rebeccapurple;
+}
+
+.buy-btn:hover{
+    background-color: rebeccapurple;
+    color: pink
 }

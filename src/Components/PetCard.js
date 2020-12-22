@@ -11,23 +11,18 @@ class PetCard extends React.Component{
 
 
     componentDidMount(){
-        this.props.getHunger(this.props.pet)
        setInterval(() => {
             return this.props.currentPet ?
-            (
-                this.decrementHappiness()
-            )
+                (this.decrementHappiness())
             :
-            null
+                null
         }, 1*10000)
 
         setInterval(() => {
             return this.props.currentPet ?
-            (
-                this.decrementHunger()
-            )
+                (this.decrementHunger())
             :
-            null
+                null
         }, 8000)
     }
 
@@ -76,6 +71,7 @@ class PetCard extends React.Component{
             return this.props.unsetCurrentPet(this.props.pet)
         }else{
             this.setState({clicked: true})
+            this.props.getHunger(this.props.pet)
             this.props.getHappiness(this.props.pet)
             return this.props.setCurrentPet(this.props.pet)
         }

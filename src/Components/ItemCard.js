@@ -7,21 +7,30 @@ class ItemCard extends Component {
     // const {item, this.props.boughtItems, user, buyItem} = this.props
     // const [bought, setBought] = useState(true)
 
-    state = {bought: this.props.boughtItems.includes(this.props.item)}
+    state = {bought: this.props.item.bought}
 
-    setBought = () => {
-        if (this.props.boughtItems.length > 0){
-            this.setState({bought: this.props.boughtItems.includes(this.props.item)})
-        }
-    }
     localBuyItem = () => {
-        // console.log(buyItem)
-       this.setState({bought: !this.state.bought})
-       return this.props.buyItem(this.props.item, this.props.user)
+        fetch(`http://localhost:5000/api/v1/items/${this.props.item.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: JSON.stringify({
+                bought: true
+            })
+        })
+        .then(resp => resp.json())
+        .then(() => {
+            this.setState({bought: true})
+            this.props.buyItem(this.props.item, this.props.user)
+        })
    }
     render(){
+        
         return(
             <>
+
                 <div className='item-card'>
                     <img className="item-image" src={this.props.item.image} alt={this.props.item.name}/>
                     <p>{this.props.item.name}</p>
