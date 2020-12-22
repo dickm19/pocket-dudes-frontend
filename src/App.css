@@ -1,6 +1,7 @@
 .App {
   display: grid;
-  grid-template-areas:  "navbar main main itembar"
+  grid-template-areas:  "header header header header"
+                        "navbar main main itembar"
                         "navbar main main itembar"
                         "navbar main main itembar"
                         "navbar main main itembar";
@@ -10,18 +11,38 @@
 
 
 .navbar{
-  grid-area: navbar
+  grid-area: navbar;
+  text-align: center;
+  height: 85vh;
+  overflow: scroll;
 }
 
 
+.navbar #home{
+  grid-area: home;
+}
+
+.navbar #adopt{
+  grid-area: adopt;
+}
+
+.navbar #pets{
+  grid-area: pets;
+}
+
+.navbar #shop{
+  grid-area: shop;
+}
+
 .pets-container{
   grid-area: main;
-
+  height: 85vh;
+  overflow: scroll;
 }
 
 .item-bar{
   grid-area: itembar;
-  height: 475px;
+  height: 85vh;
   overflow: scroll;
 }
 
@@ -30,8 +51,39 @@
 
 }
 
+.adopt-pet-img{
+  width: 500px;
+  height: 400px;
+}
+.adopt-pet{
+  grid-area: main;
+  text-align: center
+}
+
 .shop{
   grid-area: main;
-  height: 475px;
+  height: 85vh;
   overflow: scroll;
+}
+
+.header{
+  grid-area: header;
+  text-align: center;
+  border: 2px solid white;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(210, 137, 216);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(153, 55, 159);
 }

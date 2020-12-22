@@ -6,16 +6,16 @@ export default function NavBar(){
     return(
         <div className='navbar'>
             <Link to={"/home"}>
-                <span>Home</span>
+                <span id='home'>Home</span>
             </Link><br/>
             <Link to={'/adopt'}>
-                <span>Adopt</span>
+                <span id='adopt'>Adopt</span>
             </Link><br/>
             <Link to={"/pets"}>
-                <span>Pets</span>
+                <span id='pets'>Pets</span>
             </Link><br/>
             <Link to={"/shop"}>
-                <span>Shop</span>
+                <span id='shop'>Shop</span>
             </Link>
             
         </div>

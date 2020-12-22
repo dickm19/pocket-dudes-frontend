@@ -30,6 +30,7 @@ class App extends Component {
       <div>
       {this.props.user ? 
           <div className="App">
+            <h1 className="header">POCKET DUDES</h1>
           <NavBar/>
           <Route
             exact

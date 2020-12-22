@@ -47,8 +47,9 @@ export function decrementHappiness(pet){
 }
 
 export function decrementHunger(pet){
+    const hunger = pet.hunger - 1
     return function (dispatch) {
-        dispatch({type: DECREMENT_HUNGER, payload: pet.hunger - 1})
+        dispatch({type: DECREMENT_HUNGER, payload: hunger })
     }
 }
 export function decrementPetHappiness(pet){
@@ -173,7 +174,6 @@ export function feedPet(pet){
             },
             body: JSON.stringify({
                 hunger: hunger
-
             })
             
         })

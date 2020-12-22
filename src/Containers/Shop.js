@@ -10,7 +10,7 @@ import 'react-dropdown/style.css';
 
     const boughtItems = bought.map(user_item => user_item.item)
     const filteredItems = () => {
-        console.log(bought)
+        // console.log(bought)
         if (selection === 'all'){
             return items.map(itemObj => {
                    return <ItemCard boughtItems={boughtItems} user={user} key={itemObj.id} item={itemObj}/>
@@ -31,11 +31,15 @@ import 'react-dropdown/style.css';
     return(
         <> 
             <div className='item-bar'>
-                <ItemBar bought={boughtItems} user={user}/>
+                <ItemBar boughtItems={boughtItems} user={user}/>
+            </div>
+            <div className='shop-pge'>
+            <div className='dropdown'>
+            <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
             </div>
             <div className="shop">
-                <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
                 {filteredItems()}
+            </div>
             </div>
         </>
     )

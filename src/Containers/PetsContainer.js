@@ -13,13 +13,13 @@ export default function PetsContainer({user, currentPet, bought, pets, history, 
     return(
         <>
             <div className="item-bar">
-             <ItemBar bought={boughtItems} user={user}/>
+             <ItemBar boughtItems={boughtItems} user={user}/>
             </div>
             {user ? 
                 
                     
                 <div className="pets-container">
-                    <h1>Your Pets</h1>
+                    <h1>Your Dudes</h1>
                     {renderPets()}
                 </div>
             : 
