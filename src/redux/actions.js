@@ -1,4 +1,4 @@
-import {SET_CURRENT_PET, BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, FEED_PET, PLAY_WITH_PET, GET_ITEMS, DECREMENT_PET_HAPPINESS, DECREMENT_PET_HUNGER, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, UNSET_CURRENT_PET} from './actionTypes'
+import {SET_CURRENT_PET, BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, FEED_PET, PLAY_WITH_PET, GET_ITEMS, DECREMENT_PET_HAPPINESS, DECREMENT_PET_HUNGER, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, UNSET_CURRENT_PET, UN_BUY} from './actionTypes'
 
 // FETCH_PETS, ADD_PET, 
 
@@ -26,64 +26,60 @@ export function getPetHunger(pet) {
 }
 
 export function incrementHappiness(pet){
-    const happiness = pet.happiness + 1
     return function (dispatch) {
-        dispatch({type: INCREMENT_HAPPINESS, payload: happiness})
+        dispatch({type: INCREMENT_HAPPINESS, payload: pet.happiness})
     }
 }
 
 export function incrementHunger(pet){
-    const hunger = pet.hunger + 1
     return function (dispatch) {
-        dispatch({type: INCREMENT_HUNGER, payload: hunger})
+        dispatch({type: INCREMENT_HUNGER, payload: pet.hunger})
     }
 }
 
 export function decrementHappiness(pet){
-    const happiness = pet.happiness - 1
     return function (dispatch) {
-        dispatch({type: DECREMENT_HAPPINESS, payload: happiness})
+        dispatch({type: DECREMENT_HAPPINESS, payload: pet.happiness - 1})
     }
 }
 
 export function decrementHunger(pet){
-    const hunger = pet.hunger - 1
     return function (dispatch) {
-        dispatch({type: DECREMENT_HUNGER, payload: hunger })
+        dispatch({type: DECREMENT_HUNGER, payload: pet.hunger - 1 })
     }
 }
-export function decrementPetHappiness(pet){
-    return function (dispatch) {
-        fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({
-                happiness: pet.happiness - 1
-            })
-        })
-        .then(resp => resp.json())
-        .then(data => dispatch({type: DECREMENT_PET_HAPPINESS, payload: data}))
-    }
-}
-export function decrementPetHunger(pet){
-    return function (dispatch) {
-        fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({
-                hunger: pet.hunger - 1
-            })
-        })
-        .then(resp => resp.json())
-        .then(data => dispatch({type: DECREMENT_PET_HUNGER, payload: data}))
-    }
-}
+// export function decrementPetHappiness(pet){
+//     return function (dispatch) {
+//         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
+//             method: 'PATCH',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Accepts': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 happiness: pet.happiness - 1
+//             })
+//         })
+//         .then(resp => resp.json())
+//         .then(data => dispatch({type: DECREMENT_PET_HAPPINESS, payload: data}))
+//     }
+// }
+// export function decrementPetHunger(pet){
+//     return function (dispatch) {
+//         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
+//             method: 'PATCH',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Accepts': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 hunger: pet.hunger - 1
+//             })
+//         })
+//         .then(resp => resp.json())
+//         .then(data => dispatch({type: DECREMENT_PET_HUNGER, payload: data}))
+//     }
+// }
 export function getItems(){
     return function (dispatch){
         fetch('http://localhost:5000/api/v1/items')
@@ -154,51 +150,68 @@ export function addPet(petObj){
 }
 
 
-export function useItem(user_item){
+export function useItem(user_item, boughtCopy){
     return function(dispatch){
         fetch(`http://localhost:5000/api/v1/user_items/${user_item.id}`, {
             method: 'DELETE'
         })
         .then(resp => resp.json())
-        .then(()=> dispatch({type: USE_ITEM, payload: user_item}))
+        .then(()=> {dispatch({type: USE_ITEM, payload: boughtCopy})})
     }
 }
 
-export function feedPet(pet){
-    return function(dispatch){
-        const hunger = pet.hunger + 1
+
+   
+export function feedPet(pet) {
+    return function (dispatch){
         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
             method: 'PATCH',
             headers: {
-                "Content-Type": 'application/json',
+                'Content-Type': 'application/json',
                 'Accepts': 'application/json'
             },
             body: JSON.stringify({
-                hunger: hunger
+                hunger: pet.hunger + 1
             })
-            
         })
         .then(resp => resp.json())
-        .then(data => dispatch({type: FEED_PET, payload: data}))
+        .then(data =>  dispatch({type: FEED_PET, payload: data}))
+        
     }
+
 }
 
-export function playWithPet(pet){
-    return function(dispatch){
+export function playWithPet(pet) {
+    return function (dispatch){
         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
             method: 'PATCH',
             headers: {
-                "Content-Type": 'application/json',
+                'Content-Type': 'application/json',
                 'Accepts': 'application/json'
             },
             body: JSON.stringify({
                 happiness: pet.happiness + 1
-
             })
-            
         })
         .then(resp => resp.json())
-        .then(data => dispatch({type: PLAY_WITH_PET, payload: data}))
+        .then(data =>  dispatch({type: PLAY_WITH_PET, payload: data}))
+        
+    }
+
+}
+export function unBuy(item, boughtCopy){
+    return function(dispatch){
+        fetch(`http://localhost:5000/api/v1/items/${item.id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: JSON.stringify({
+                bought: false
+            })
+        })
+        .then(resp => resp.json())
+        .then(() => dispatch({type: UN_BUY, payload: boughtCopy}))
     }
 }
-

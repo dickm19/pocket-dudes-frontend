@@ -1,54 +1,87 @@
 import React from 'react'
-import { feedPet, playWithPet, setCurrentPet, useItem, decrementPetHunger, decrementPetHappiness, incrementHappiness, incrementHunger, getPetHappiness, getPetHunger, decrementHappiness, decrementHunger, unsetCurrentPet } from '../redux/actions';
+import { feedPet, playWithPet, setCurrentPet, useItem, incrementHappiness, incrementHunger, getPetHappiness, getPetHunger, decrementHappiness, decrementHunger, unsetCurrentPet, unBuy } from '../redux/actions';
 import { connect } from 'react-redux'
 import './PetCard.css'
 
-class PetCard extends React.Component{
+const PetCard = React.memo(class extends React.Component{
 
     state = {
-        clicked: false
+        clicked: false,
+        happiness: null,
+        hunger: null,
+        currentPet: null
     }
 
 
-    componentDidMount(){
-       setInterval(() => {
-            return this.props.currentPet ?
+     componentDidMount(){
+        setInterval(() => {
+            return this.props.pet === this.props.currentPet ?
+                // this.setState({currentPet: this.props.pet })
                 (this.decrementHappiness())
             :
                 null
-        }, 1*10000)
+        }, 1*11000)
 
         setInterval(() => {
-            return this.props.currentPet ?
+            return this.props.pet === this.props.currentPet ?
+                // this.setState({currentPet: this.props.pet })
                 (this.decrementHunger())
             :
                 null
-        }, 8000)
+        }, 1*11000)
+        
     }
 
 
     decrementHappiness(){
             // console.log('test2')
-            if (this.props.happiness > 0){
-                this.props.decrementHappiness(this.props.currentPet)
-                this.props.decrementPetHappiness(this.props.currentPet)
+            if (this.props.pet.happiness > 0){
+                fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accepts': 'application/json'
+                },
+                body: JSON.stringify({
+                    happiness: this.props.pet.happiness - 1
+                })
+                })
+                .then(resp => resp.json())
+                .then(() => this.setState({happiness: this.state.happiness - 1}))
+                
             }
     }
-
     decrementHunger(){
-        if (this.props.hunger > 0){
-            this.props.decrementHunger(this.props.currentPet)
-            this.props.decrementPetHunger(this.props.currentPet)
+        // console.log('test2')
+        if (this.props.pet.hunger > 0){
+            fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: JSON.stringify({
+                hunger: this.props.pet.hunger - 1
+            })
+            })
+            .then(resp => resp.json())
+            .then( () => this.setState({hunger: this.state.hunger - 1}))
+           
         }
-    }
+}
+
 
     localFeedPet = () => {
         if (this.props.currentPet.hunger < 10){
             const boughtFood = this.props.bought.filter(user_item => user_item.item.kind === 'food')
             const user_food = boughtFood[0]
             this.props.incrementHunger(this.props.currentPet)
+            const boughtCopy = [...this.props.bought]
+            const index = boughtCopy.findIndex(item => item === user_food)
+            boughtCopy.splice(index, 1)
             this.props.feedPet(this.props.currentPet)
-            this.props.useItem(user_food)
+            this.props.useItem(user_food, boughtCopy)
+            this.props.unBuy(user_food.item, boughtCopy)
         }
     }
 
@@ -57,8 +90,12 @@ class PetCard extends React.Component{
             const boughtToy = this.props.bought.filter(user_item => user_item.item.kind === 'toy')
             const user_toy = boughtToy[0]
             this.props.incrementHappiness(this.props.currentPet)        
+            const boughtCopy = [...this.props.bought]
+            const index = boughtCopy.findIndex(item => item === user_toy)
+            boughtCopy.splice(index, 1)
+            this.props.useItem(user_toy, boughtCopy)
             this.props.playWithPet(this.props.currentPet)
-            this.props.useItem(user_toy)
+            this.props.unBuy(user_toy.item, boughtCopy)
         }
     }
 
@@ -67,10 +104,18 @@ class PetCard extends React.Component{
     localSetCurrentPet = () => {
         
         if (this.props.pet === this.props.currentPet){
-            this.setState({clicked: false})
+            this.setState({
+                clicked: false,
+                currentPet: null
+            })
             return this.props.unsetCurrentPet(this.props.pet)
         }else{
-            this.setState({clicked: true})
+            this.setState({
+                clicked: true,
+                currentPet: this.props.pet,
+                happiness: this.props.pet.happiness,
+                hunger: this.props.pet.hunger
+            })
             this.props.getHunger(this.props.pet)
             this.props.getHappiness(this.props.pet)
             return this.props.setCurrentPet(this.props.pet)
@@ -80,12 +125,13 @@ class PetCard extends React.Component{
     
 
     render(){
+        
         return(
             <div  className='pet-card'>
                 <p>{this.props.pet.name}</p>
                 <img className='pet-image' src={this.props.pet.pet_image_url.image_url} onClick={() => this.localSetCurrentPet()} alt={this.props.pet.name}/>
-                <p className='happiness'>Happiness: {this.props.pet === this.props.currentPet ? this.props.happiness : this.props.pet.happiness}/10</p>
-                <p className='hunger'>Hunger: {this.props.pet === this.props.currentPet ? this.props.hunger : this.props.pet.hunger}/10</p>
+                <p className='happiness'>Happiness: {this.props.pet === this.props.currentPet ? this.state.happiness : this.props.pet.happiness}/10</p>
+                <p className='hunger'>Hunger: {this.props.pet === this.props.currentPet ? this.state.hunger : this.props.pet.hunger}/10</p>
                
                     {this.props.pet === this.props.currentPet ? 
                     <div>
@@ -101,7 +147,7 @@ class PetCard extends React.Component{
         )
     }
 }
-
+)
 function mdp(dispatch) {
     return { 
         incrementHappiness: (pet) => dispatch(incrementHappiness(pet)),
@@ -111,12 +157,13 @@ function mdp(dispatch) {
         setCurrentPet: (pet) => dispatch(setCurrentPet(pet)),
         feedPet: (pet) => dispatch(feedPet(pet)),
         playWithPet: (pet) => dispatch(playWithPet(pet)),
-        useItem: (user_item) => dispatch(useItem(user_item)),
-        decrementPetHappiness: (pet) => dispatch(decrementPetHappiness(pet)),
-        decrementPetHunger: (pet) => dispatch(decrementPetHunger(pet)),
+        useItem: (user_item, bought) => dispatch(useItem(user_item, bought)),
+        // decrementPetHappiness: (pet) => dispatch(decrementPetHappiness(pet)),
+        // decrementPetHunger: (pet) => dispatch(decrementPetHunger(pet)),
         getHappiness: (pet) => dispatch(getPetHappiness(pet)),
         getHunger: (pet) => dispatch(getPetHunger(pet)),
-        unsetCurrentPet: (pet) => dispatch(unsetCurrentPet(pet))
+        unsetCurrentPet: (pet) => dispatch(unsetCurrentPet(pet)),
+        unBuy: (item, bought) => dispatch(unBuy(item, bought))
      }
 }
 export default connect(null, mdp)(PetCard);

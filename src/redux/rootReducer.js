@@ -26,9 +26,9 @@ function happinessReducer(state = defaultState.happiness, action){
         case "GET_PET_HAPPINESS":
             return action.payload
         case 'DECREMENT_HAPPINESS':
-            return action.payload
+            return action.payload + 1
         case 'INCREMENT_HAPPINESS':
-            return action.payload
+            return action.payload + 1
         default:
             return state
     }
@@ -73,12 +73,11 @@ function boughtReducer( state = defaultState.bought, action){
         case 'BUY_ITEM':
             return [...state, action.payload]
         case 'USE_ITEM':
-            const boughtCopy = [...state]
-            const index = boughtCopy.findIndex(item => item === action.payload)
-            boughtCopy.splice(index, 1)
-            return boughtCopy
-        default:
-            return state
+            return action.payload
+        case 'UN_BUY':
+            return action.payload
+            default:
+        return state
     }
 }
 
