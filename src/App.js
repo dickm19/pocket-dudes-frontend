@@ -1,18 +1,20 @@
 import React, { Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import Home from './Components/Home'
+// import Home from './Components/Home'
+import SnakeGame from './Components/SnakeGame'
 import PetsContainer from './Containers/PetsContainer'
 import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
 import { connect } from 'react-redux'
 import AdoptPet from './Components/AdoptPet'
-import { getBought, getItems, getUser, getPets } from './redux/actions';
+import { getBought, getItems, getUser, getPets, setVal } from './redux/actions';
 import './App.css';
 
 class App extends Component {
 
   state = {
-    images: []
+    images: [],
+    key: null
   }
 
   componentDidMount(){
@@ -22,14 +24,21 @@ class App extends Component {
     this.props.getBought(this.props.user)
     this.props.getItems()
   }
-  
-  render(){
+
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter'){
+      this.props.setVal(e)
+    }
     
+  }
+
+  render(){
+ 
     return (
       
       <div>
       {this.props.user ? 
-          <div className="App">
+          <div tabIndex='1' onKeyDown={this.handleKeyDown} className="App">
             <h1 className="header">POCKET DUDES</h1>
           <NavBar/>
           <Route
@@ -41,11 +50,18 @@ class App extends Component {
           />
           <Route
             exact
+            path="/game"
+            render={()=>
+              <SnakeGame user={this.props.user} awardPoints={this.awardPoints}/>
+            }
+            />
+          {/* <Route
+            exact
             path="/home"
             render={() => 
               <Home happiness={this.props.happiness} hunger={this.props.hunger} history={this.props.history} bought={this.props.bought} currentPet={this.props.currentPet} user={this.props.user}/>
             }
-          />
+          /> */}
           <Route
             exact
             path="/adopt"
@@ -67,7 +83,9 @@ class App extends Component {
               <Shop  bought={this.props.bought} items={this.props.items} user={this.props.user}/>
             }
           />
-  
+          <div className='user-points'>
+            Points: {this.props.points ? this.props.points : this.props.user.points}
+          </div>
            </div>
             
             :
@@ -88,7 +106,8 @@ function msp(state) {
       pets: state.pets,
       items: state.items,
       happiness: state.happiness,
-      hunger: state.hunger
+      hunger: state.hunger,
+      points: state.points
   }
 }
 
@@ -98,7 +117,8 @@ function mdp(dispatch) {
       getBought: () => dispatch(getBought()),
       getUser: () => dispatch(getUser()),
       getPets: () => dispatch(getPets()),
-      getItems: () => dispatch(getItems())
+      getItems: () => dispatch(getItems()),
+      setVal: (e) => dispatch(setVal(e))
    }
 }
 

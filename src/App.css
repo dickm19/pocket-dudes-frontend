@@ -9,6 +9,10 @@
   background-color: pink;
 }
 
+.snake-game{
+  grid-area: main;
+}
+
 
 .navbar{
   grid-area: navbar;

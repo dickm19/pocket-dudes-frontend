@@ -1,4 +1,4 @@
-import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, FEED_PET, PLAY_WITH_PET, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, UN_BUY} from './actionTypes'
+import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, UN_BUY, AWARD_POINTS, SET_VAL, SET_HIGH_SCORE} from './actionTypes'
 
 // FETCH_PETS, ADD_PET, 
 
@@ -13,9 +13,41 @@ import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, FEED_PET, 
 //         dispatch({type: UNSET_CURRENT_PET, payload: null})
 //     }
 // }
+
+export function setHighScore(score){
+    return function (dispatch){
+        dispatch({type: SET_HIGH_SCORE, payload: score})
+    }
+}
+
+export function setVal(e){
+    return function (dispatch){
+        dispatch({type: SET_VAL, payload: e.key})
+    }
+}
 export function getPetHappiness(pet) {
     return function (dispatch) {
         dispatch({type: GET_PET_HAPPINESS, payload: pet.happiness})
+    }
+}
+// export function getPoints(user) {
+//     return function (dispatch) {
+//         dispatch({type: GET_POINTS, payload: user.points})
+//     }
+// }
+
+export function awardPoints(points, user) {
+    return function (dispatch){
+        fetch(`http://localhost:5000/api/v1/users/${user.id}`,{
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accepts': 'application/json'
+            },
+            body: JSON.stringify({points: points})
+        })
+        .then(resp => resp.json())
+        .then(() => dispatch({type: AWARD_POINTS, payload: points}))
     }
 }
 

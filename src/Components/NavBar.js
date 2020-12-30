@@ -5,8 +5,8 @@ import './NavBar.css'
 export default function NavBar(){
     return(
         <div className='navbar'>
-            <Link to={"/home"}>
-                <span id='home'>Home</span>
+            <Link to={"/game"}>
+                <span id='game'>Game</span>
             </Link><br/>
             <Link to={'/adopt'}>
                 <span id='adopt'>Adopt</span>

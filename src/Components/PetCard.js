@@ -3,12 +3,13 @@ import { useItem, incrementHappiness, incrementHunger, getPetHappiness, getPetHu
 import { connect } from 'react-redux'
 import './PetCard.css'
 
+const petsUrl = `http://localhost:5000/api/v1/pets`
+
 const PetCard = React.memo(class extends React.Component{
 
     state = {
         happiness: this.props.pet.happiness,
         hunger: this.props.pet.hunger,
-        // currentPet: null
     }
 
 
@@ -24,9 +25,8 @@ const PetCard = React.memo(class extends React.Component{
 
 
     decrementHappiness(){
-            // console.log('test2')
             if (this.props.pet.happiness > 0){
-                fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
+                fetch(`${petsUrl}/${this.props.pet.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,9 +47,8 @@ const PetCard = React.memo(class extends React.Component{
             }
     }
     decrementHunger(){
-        // console.log('test2')
         if (this.props.pet.hunger > 0){
-            fetch(`http://localhost:5000/api/v1/pets/${this.props.pet.id}`, {
+            fetch(`${petsUrl}/${this.props.pet.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -72,39 +71,37 @@ const PetCard = React.memo(class extends React.Component{
 
 
     localFeedPet = () => {
-        if (this.props.pet.hunger < 10){
-            const boughtFood = this.props.bought.filter(user_item => user_item.item.kind === 'food')
-            if (boughtFood.length > 0){
-                const user_food = boughtFood[0]
-                this.props.incrementHunger(this.props.pet)
-                const boughtCopy = [...this.props.bought]
-                const index = boughtCopy.findIndex(item => item === user_food)
-                boughtCopy.splice(index, 1)
-                this.feedPet(this.props.pet)
-                this.props.useItem(user_food, boughtCopy)
-                this.props.unBuy(user_food.item, boughtCopy)
-            }
-        }
+        this.interactWithPet('food', 'hunger')
     }
 
     localPlayWithPet = () => {
-        if (this.props.pet.happiness < 10){
-            const boughtToy = this.props.bought.filter(user_item => user_item.item.kind === 'toy')
-            if (boughtToy.length > 0){
-                const user_toy = boughtToy[0]
-                this.props.incrementHappiness(this.props.pet)        
+        this.interactWithPet('toy', 'happiness')
+    }
+    
+    interactWithPet = (itemType, need) => {
+        console.log(this.props.pet[need])
+        if (this.props.pet[need] < 10){
+            const boughtItems = this.props.bought.filter(user_item => user_item.item.kind === itemType)
+            if (boughtItems.length > 0){
+                const user_item = boughtItems[0]
                 const boughtCopy = [...this.props.bought]
-                const index = boughtCopy.findIndex(item => item === user_toy)
+                const index = boughtCopy.findIndex(item => item === user_item)
                 boughtCopy.splice(index, 1)
-                this.props.useItem(user_toy, boughtCopy)
-                this.playWithPet(this.props.pet)
-                this.props.unBuy(user_toy.item, boughtCopy)
+                if (need === 'hunger'){
+                    this.props.incrementHunger(this.props.pet)
+                    this.feedPet(this.props.pet)
+                }else{
+                    this.props.incrementHappiness(this.props.pet)
+                    this.playWithPet(this.props.pet)
+                }
+                this.props.useItem(user_item, boughtCopy)
+                this.props.unBuy(user_item.item, boughtCopy)
             }
         }
     }
 
     feedPet = (pet) => {
-        fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
+        fetch(`${petsUrl}/${pet.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +118,7 @@ const PetCard = React.memo(class extends React.Component{
             })
     }
     playWithPet = (pet) => {
-        fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
+        fetch(`${petsUrl}/${pet.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

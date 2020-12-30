@@ -8,8 +8,37 @@ const defaultState = {
     pets: [],
     items: [],
     happiness: null,
-    hunger: null
+    hunger: null,
+    points: 0,
+    highScore: 0,
+    val: null
     
+}
+function pointsReducer(state = defaultState.points, action){
+    switch(action.type){
+        case 'AWARD_POINTS':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+function highScoreReducer(state = defaultState.highScore, action){
+    switch(action.type){
+        case 'SET_HIGH_SCORE':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+function valReducer(state = defaultState.val, action){
+    switch(action.type){
+        case 'SET_VAL':
+            return action.payload
+        default:
+            return state
+    }
 }
 
 function itemsReducer(state = defaultState.items, action){
@@ -109,7 +138,10 @@ const rootReducer = combineReducers({
     pets: petsReducer,
     items: itemsReducer,
     happiness: happinessReducer,
-    hunger: hungerReducer
+    hunger: hungerReducer,
+    points: pointsReducer,
+    val: valReducer,
+    highScore: highScoreReducer
   });
   
 

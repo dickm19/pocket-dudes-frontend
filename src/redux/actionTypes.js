@@ -20,4 +20,8 @@ export const DECREMENT_HAPPINESS = 'DECREMENT_HAPPINESS'
 export const DECREMENT_HUNGER = 'DECREMENT_HUNGER'
 export const UNSET_CURRENT_PET = 'UNSET_CURRENT_PET'
 export const UN_BUY = 'UN_BUY'
+export const AWARD_POINTS = 'AWARD_POINTS'
+export const SET_VAL = 'SET_VAL'
+export const SET_HIGH_SCORE = 'SET_HIGH_SCORE'
+
 
