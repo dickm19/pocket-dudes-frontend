@@ -5,20 +5,26 @@ import { connect } from 'react-redux'
 
 class SnakeGame extends React.Component {
 
-    state = {
-        clicked: false,
-        same: false
+    constructor(props){
+        super(props)
+        if (props.user){
+            this.state = {
+                clicked: false,
+                // same: props.user.high_score === parseInt(localStorage.snakeHighScore),
+                userHighScore: this.props.user.high_score,
+                currentHighScore: parseInt(localStorage.snakeHighScore)
+            }
+        }
     }
 
     localAwardPoints = () => {
-        const points = parseInt(localStorage.snakeHighScore) + parseInt(this.props.user.points)
-        if (this.props.user['high_score'] === parseInt(localStorage.snakeHighScore)){
-            this.setState({same: true})
-            // return null
-        }else{
-            this.setState({same: false})
+        const points = parseInt(localStorage.snakeHighScore) + parseInt(this.props.points)
+        if (this.props.user){
             this.setHighScore(parseInt(localStorage.snakeHighScore))
             this.props.awardPoints(points, this.props.user)
+            this.setState({
+                currentHighScore: parseInt(localStorage.snakeHighScore),
+            })
         }
     }
 
@@ -32,35 +38,32 @@ class SnakeGame extends React.Component {
             body: JSON.stringify({high_score: points})
         })
         .then(resp => resp.json())
-        .then(() => this.setState({same: true}))
+        .then(() => this.setState({
+            userHighScore: points
+        }))
     }
     handleEndGame = () => {
-        if (this.props.user['high_score'] === parseInt(localStorage.snakeHighScore)){
-            this.setState({
-                clicked: !this.state.clicked,
-                same: true
-            })
-        }else{
-            this.setState({
-                clicked: !this.state.clicked,
-                same: false
-            })
-        }
+        this.setState({
+            clicked: !this.state.clicked,
+            currentHighScore: parseInt(localStorage.snakeHighScore)
+        })
     }
 
     render(){
+        // console.log(this.props.user['high_score'] === parseInt(localStorage.snakeHighScore))
         // console.log(this.props.key)
         // console.log('user:', this.props.user['high_score'], 'local:', localStorage.snakeHighScore)
         return(
             <div  className="snake-game">
+                <h4 className='snake-header'>Beat Your High Score to Earn Points!</h4>
                 {this.state.clicked ? null : <Snake percentageWidth={100}/>}
                 {this.state.clicked ? 
-                   (this.state.same) ? 
+                   (this.state.userHighScore === this.state.currentHighScore) ? 
                         null 
                    : 
                         <button className="points-button" onClick={this.localAwardPoints}>Collect Points! {localStorage.snakeHighScore}</button> 
                 :
-                   null}
+                    null}
                    <button className='toggle-game-button' onClick={this.handleEndGame}>{this.state.clicked ? "Play Again" : 'Done Playing'}</button>
             </div>
         )

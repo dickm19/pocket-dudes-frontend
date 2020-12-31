@@ -10,21 +10,25 @@ class ItemCard extends Component {
     state = {bought: this.props.item.bought}
 
     localBuyItem = () => {
-        fetch(`http://localhost:5000/api/v1/items/${this.props.item.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({
-                bought: true
+        if (this.props.user.points > 0){
+            fetch(`http://localhost:5000/api/v1/items/${this.props.item.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accepts': 'application/json'
+                },
+                body: JSON.stringify({
+                    bought: true
+                })
             })
-        })
-        .then(resp => resp.json())
-        .then(() => {
-            this.setState({bought: true})
-            this.props.buyItem(this.props.item, this.props.user)
-        })
+            .then(resp => resp.json())
+            .then(() => {
+                this.setState({bought: true})
+                this.props.buyItem(this.props.item, this.props.user)
+                this.props.spend(this.props.item, this.props.user)
+                window.location.reload()
+            })
+        }
    }
     render(){
         
@@ -34,11 +38,13 @@ class ItemCard extends Component {
                 <div className='item-card'>
                     <img className="item-image" src={this.props.item.image} alt={this.props.item.name}/>
                     <p>{this.props.item.name}</p>
-                    
                     {this.state.bought ? 
                         null
-                    :
-                        <button className='buy-btn' onClick={this.localBuyItem}>Buy</button>
+                        :
+                        <>
+                            <p>Cost: {this.props.item.cost}</p>
+                            <button className='buy-btn' onClick={this.localBuyItem}>Buy</button>
+                        </>
                 }
                 </div>
             </>

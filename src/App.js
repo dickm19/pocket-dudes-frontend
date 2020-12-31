@@ -14,7 +14,6 @@ class App extends Component {
 
   state = {
     images: [],
-    key: null
   }
 
   componentDidMount(){
@@ -25,11 +24,17 @@ class App extends Component {
     this.props.getItems()
   }
 
-  handleKeyDown = (e) => {
-    if (e.key === 'Enter'){
-      this.props.setVal(e)
-    }
-    
+  spend = (item, user) => {
+    fetch(`http://localhost:5000/api/v1/users/${user.id}`, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accepts': 'application/json'
+      },
+      body: JSON.stringify({points: user.points - item.cost})
+    })
+    .then(resp => resp.json())
+    .then(() => this.setState({points: this.state.points - item.cost}))
   }
 
   render(){
@@ -38,7 +43,7 @@ class App extends Component {
       
       <div>
       {this.props.user ? 
-          <div tabIndex='1' onKeyDown={this.handleKeyDown} className="App">
+          <div  className="App">
             <h1 className="header">POCKET DUDES</h1>
           <NavBar/>
           <Route
@@ -52,16 +57,9 @@ class App extends Component {
             exact
             path="/game"
             render={()=>
-              <SnakeGame user={this.props.user} awardPoints={this.awardPoints}/>
+              <SnakeGame points={this.props.points} user={this.props.user} awardPoints={this.awardPoints}/>
             }
             />
-          {/* <Route
-            exact
-            path="/home"
-            render={() => 
-              <Home happiness={this.props.happiness} hunger={this.props.hunger} history={this.props.history} bought={this.props.bought} currentPet={this.props.currentPet} user={this.props.user}/>
-            }
-          /> */}
           <Route
             exact
             path="/adopt"
@@ -80,7 +78,7 @@ class App extends Component {
             exact
             path="/shop"
             render={() => 
-              <Shop  bought={this.props.bought} items={this.props.items} user={this.props.user}/>
+              <Shop spend={this.spend} bought={this.props.bought} items={this.props.items} user={this.props.user}/>
             }
           />
           <div className='user-points'>
