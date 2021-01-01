@@ -1,4 +1,4 @@
-import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, UN_BUY, AWARD_POINTS, SET_VAL, SET_HIGH_SCORE} from './actionTypes'
+import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, UN_BUY, AWARD_POINTS, SET_VAL, SET_HIGH_SCORE, SPEND_POINTS, GET_POINTS} from './actionTypes'
 
 // FETCH_PETS, ADD_PET, 
 
@@ -13,6 +13,12 @@ import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS,
 //         dispatch({type: UNSET_CURRENT_PET, payload: null})
 //     }
 // }
+
+export function getPoints(user){
+    return function (dispatch) {
+        dispatch({type: GET_POINTS, payload: user.points})
+    }
+}
 
 export function setHighScore(score){
     return function (dispatch){
@@ -35,6 +41,12 @@ export function getPetHappiness(pet) {
 //         dispatch({type: GET_POINTS, payload: user.points})
 //     }
 // }
+
+export function spendPoints(points) {
+    return function (dispatch){
+        dispatch({type: SPEND_POINTS, payload: points})
+    }
+}
 
 export function awardPoints(points, user) {
     return function (dispatch){

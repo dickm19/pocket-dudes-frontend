@@ -7,26 +7,33 @@ import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
 import { connect } from 'react-redux'
 import AdoptPet from './Components/AdoptPet'
-import { getBought, getItems, getUser, getPets, setVal } from './redux/actions';
+import { getBought, getItems, getUser, getPets, setVal, getPoints } from './redux/actions';
 import './App.css';
 
 class App extends Component {
 
-  state = {
-    images: [],
+  constructor(props){
+    super(props)
+    this.state = {
+      images: [],
+    }
+    props.getUser()
+    if (props.user){
+      props.getPets(props.user)
+      // props.getPoints(props.user)
+      props.getBought(props.user)
+    }
+    props.getItems()
+
   }
 
   componentDidMount(){
     // console.log("in CDM")
-    this.props.getUser()
-    this.props.getPets(this.props.user)
-    this.props.getBought(this.props.user)
-    this.props.getItems()
   }
 
-  spend = (item) => {
-     this.setState({points: this.state.points - item.cost})
-  }
+  // spend = (item) => {
+  //    this.setState({points: this.state.points - item.cost})
+  // }
 
   render(){
  
@@ -69,7 +76,7 @@ class App extends Component {
             exact
             path="/shop"
             render={() => 
-              <Shop spend={this.spend} bought={this.props.bought} items={this.props.items} user={this.props.user}/>
+              <Shop points={this.props.points} spend={this.spend} bought={this.props.bought} items={this.props.items} user={this.props.user}/>
             }
           />
           <div className='user-points'>
@@ -107,7 +114,8 @@ function mdp(dispatch) {
       getUser: () => dispatch(getUser()),
       getPets: () => dispatch(getPets()),
       getItems: () => dispatch(getItems()),
-      setVal: (e) => dispatch(setVal(e))
+      setVal: (e) => dispatch(setVal(e)),
+      getPoints: (user) => dispatch(getPoints(user))
    }
 }
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { buyItem } from '../redux/actions';
+import { buyItem, spendPoints } from '../redux/actions';
 import { connect } from 'react-redux'
 import '../Containers/Shop.css'
 class ItemCard extends Component {
@@ -8,7 +8,8 @@ class ItemCard extends Component {
     // const [bought, setBought] = useState(true)
 
     state = {
-        bought: this.props.item.bought
+        bought: this.props.item.bought,
+        // points: this.props.user.points
     }
 
     localBuyItem = () => {
@@ -41,27 +42,32 @@ class ItemCard extends Component {
                         'Content-Type': 'application/json',
                         'Accepts': 'application/json'
                     },
-                    body: JSON.stringify({points: this.props.user.points - this.props.item.cost})
+                    body: JSON.stringify({points: this.props.points - this.props.item.cost})
                 })
             ])
             
             .then(([res1, res2, res3]) => (
-                {
-                    res1: res1.json(),
-                    res2: res2.json(),
-                    res3: res3.json()
-                }
+                Promise.all([res1.json(), res2.json(), res3.json()])
             ))
-            .then(({data1, data2, data3}) => {
-                console.log('res2:', data2)
+            .then((data) => {
+                // console.log('res2:', data[1].key)
+                // console.log(Object.keys(data[1]))
+                var i;
+                var userItem;
+                for (i = 0; i < data.length; i++){
+                    if (Object.keys(data[i]).includes('user_item')){
+                        userItem = data[i].user_item
+                    }
+                }
+                // console.log(user_item)
                 this.setState({bought: true})
-                this.props.buyItem(data2)
-                this.props.spend(this.props.item)
+                this.props.buyItem(userItem)
+                this.props.spendPoints(this.props.points - this.props.item.cost)
             })
         }
    }
     render(){
-        
+        console.log(this.props.points)
         return(
             <>
 
@@ -88,6 +94,7 @@ class ItemCard extends Component {
 function mdp(dispatch) {
     return { 
         buyItem: (item, user) => dispatch(buyItem(item, user)),
+        spendPoints: (points) => dispatch(spendPoints(points))
        
      }
 }

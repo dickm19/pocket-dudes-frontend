@@ -18,6 +18,10 @@ function pointsReducer(state = defaultState.points, action){
     switch(action.type){
         case 'AWARD_POINTS':
             return action.payload
+        case 'SPEND_POINTS':
+            return action.payload
+        case 'GET_POINTS':
+            return action.payload
         default:
             return state
     }

@@ -80,8 +80,8 @@ const PetCard = React.memo(class extends React.Component{
     }
     
     interactWithPet = (itemType, need) => {
-        console.log(this.props.pet[need])
-        if (this.props.pet[need] < 10){
+        // console.log(this.props.pet[need])
+        if (this.state[need] < 10){
             const boughtItems = this.props.bought.filter(user_item => user_item.item.kind === itemType)
             if (boughtItems.length > 0){
                 const user_item = boughtItems[0]
@@ -138,7 +138,7 @@ const PetCard = React.memo(class extends React.Component{
                                 'Accepts': 'application/json'
                             },
                             body: JSON.stringify({
-                                hunger: this.state.hunger + 1
+                                happiness: this.state.happiness + 1
                             })
                         }),
                         fetch(`http://localhost:5000/api/v1/user_items/${user_item.id}`, {
