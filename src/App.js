@@ -24,17 +24,8 @@ class App extends Component {
     this.props.getItems()
   }
 
-  spend = (item, user) => {
-    fetch(`http://localhost:5000/api/v1/users/${user.id}`, {
-      method: 'PATCH',
-      headers: {
-          'Content-Type': 'application/json',
-          'Accepts': 'application/json'
-      },
-      body: JSON.stringify({points: user.points - item.cost})
-    })
-    .then(resp => resp.json())
-    .then(() => this.setState({points: this.state.points - item.cost}))
+  spend = (item) => {
+     this.setState({points: this.state.points - item.cost})
   }
 
   render(){

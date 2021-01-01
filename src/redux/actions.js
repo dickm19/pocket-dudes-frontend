@@ -120,21 +120,9 @@ export function getItems(){
     }
 }
 
-export function buyItem(item, user) {
+export function buyItem(user_item) {
     return function (dispatch){
-        fetch("http://localhost:5000/api/v1/user_items", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({
-                user_id: user.id,
-                item_id: item.id
-            })
-        })
-        .then(resp => resp.json())
-        .then(data =>  dispatch({type: BUY_ITEM, payload: data.user_item}))
+       dispatch({type: BUY_ITEM, payload: user_item})
         
     }
 }
@@ -182,13 +170,9 @@ export function addPet(petObj){
 }
 
 
-export function useItem(user_item, boughtCopy){
+export function useItem( boughtCopy){
     return function(dispatch){
-        fetch(`http://localhost:5000/api/v1/user_items/${user_item.id}`, {
-            method: 'DELETE'
-        })
-        .then(resp => resp.json())
-        .then(()=> {dispatch({type: USE_ITEM, payload: boughtCopy})})
+        dispatch({type: USE_ITEM, payload: boughtCopy})
     }
 }
 
@@ -231,19 +215,8 @@ export function useItem(user_item, boughtCopy){
 //     }
 
 // }
-export function unBuy(item, boughtCopy){
+export function unBuy(boughtCopy){
     return function(dispatch){
-        fetch(`http://localhost:5000/api/v1/items/${item.id}`, {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({
-                bought: false
-            })
-        })
-        .then(resp => resp.json())
-        .then(() => dispatch({type: UN_BUY, payload: boughtCopy}))
+       dispatch({type: UN_BUY, payload: boughtCopy})
     }
 }

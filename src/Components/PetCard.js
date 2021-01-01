@@ -34,12 +34,12 @@ const PetCard = React.memo(class extends React.Component{
                     'Accepts': 'application/json'
                 },
                 body: JSON.stringify({
-                    happiness: this.props.pet.happiness - 1
+                    happiness: this.state.happiness - 1
                 })
                 })
                 .then(resp => resp.json())
                 .then(() => {
-                    window.location.reload()
+                    // window.location.reload()
                     this.setState({
                         happiness: this.state.happiness - 1
                     })
@@ -56,12 +56,12 @@ const PetCard = React.memo(class extends React.Component{
                 'Accepts': 'application/json'
             },
             body: JSON.stringify({
-                hunger: this.props.pet.hunger - 1
+                hunger: this.state.hunger - 1
             })
             })
             .then(resp => resp.json())
             .then( () => {
-                window.location.reload()
+                // window.location.reload()
                 this.setState({
                     hunger: this.state.hunger - 1
                 })
@@ -90,51 +90,109 @@ const PetCard = React.memo(class extends React.Component{
                 boughtCopy.splice(index, 1)
                 if (need === 'hunger'){
                     this.props.incrementHunger(this.props.pet)
-                    this.feedPet(this.props.pet)
+                    Promise.all([
+                        fetch(`${petsUrl}/${this.props.pet.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accepts': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                hunger: this.state.hunger + 1
+                            })
+                        }),
+                        fetch(`http://localhost:5000/api/v1/user_items/${user_item.id}`, {
+                            method: 'DELETE'
+                        }),
+                        fetch(`http://localhost:5000/api/v1/items/${user_item.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                "Content-Type": 'application/json',
+                                'Accepts': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                bought: false
+                            })
+                        })
+                    ])
+                    .then(([res1, res2, res3]) => (
+                        {
+                            res1: res1.json(),
+                            res2: res2.json(),
+                            res3: res3.json()
+
+                        }
+                    ))
+                    .then(() =>{
+                         this.setState({hunger: this.state.hunger + 1})
+                        this.props.useItem(boughtCopy)
+                        this.props.unBuy(boughtCopy)
+                    })
                 }else{
                     this.props.incrementHappiness(this.props.pet)
-                    this.playWithPet(this.props.pet)
+                    Promise.all([
+                        fetch(`${petsUrl}/${this.props.pet.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accepts': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                hunger: this.state.hunger + 1
+                            })
+                        }),
+                        fetch(`http://localhost:5000/api/v1/user_items/${user_item.id}`, {
+                            method: 'DELETE'
+                        }),
+                        fetch(`http://localhost:5000/api/v1/items/${user_item.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                "Content-Type": 'application/json',
+                                'Accepts': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                bought: false
+                            })
+                        })
+                    ])
+                    .then(([res1, res2, res3]) => (
+                        {
+                            res1: res1.json(),
+                            res2: res2.json(),
+                            res3: res3.json()
+
+                        }
+                    ))
+                    .then(() =>{
+                         this.setState({happiness: this.state.happiness + 1})
+                        this.props.useItem(boughtCopy)
+                        this.props.unBuy(boughtCopy)
+                    })
                 }
-                this.props.useItem(user_item, boughtCopy)
-                this.props.unBuy(user_item.item, boughtCopy)
             }
         }
     }
 
-    feedPet = (pet) => {
-        fetch(`${petsUrl}/${pet.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({
-                hunger: pet.hunger + 1
-            })
-        })
-        .then(resp => resp.json())
-        .then(() =>{
-            window.location.reload()
-             this.setState({hunger: pet.hunger + 1})
-            })
-    }
-    playWithPet = (pet) => {
-        fetch(`${petsUrl}/${pet.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accepts': 'application/json'
-            },
-            body: JSON.stringify({
-                happiness: pet.happiness + 1
-            })
-        })
-        .then(resp => resp.json())
-        .then(() => {
-            window.location.reload()
-            this.setState({happiness: pet.happiness + 1})
-        })
-    }
+    // feedPet = (pet) => {
+        
+    // }
+    // playWithPet = (pet) => {
+    //     fetch(`${petsUrl}/${pet.id}`, {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accepts': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             happiness: pet.happiness + 1
+    //         })
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(() => {
+    //         window.location.reload()
+    //         this.setState({happiness: pet.happiness + 1})
+    //     })
+    // }
     // localSetCurrentPet = () => {
         
     //     if (this.props.pet === this.props.currentPet){
