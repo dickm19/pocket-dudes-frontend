@@ -67,7 +67,8 @@ class ItemCard extends Component {
         }
    }
     render(){
-        console.log(this.props.points)
+        // console.log(this.props.points)
+        // console.log(this.props.user.points)
         return(
             <>
 

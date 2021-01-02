@@ -12,23 +12,17 @@ import './App.css';
 
 class App extends Component {
 
-  constructor(props){
-    super(props)
-    this.state = {
+ 
+    state = {
       images: [],
     }
-    props.getUser()
-    if (props.user){
-      props.getPets(props.user)
-      // props.getPoints(props.user)
-      props.getBought(props.user)
-    }
-    props.getItems()
-
-  }
 
   componentDidMount(){
-    // console.log("in CDM")
+    this.props.getUser()
+    this.props.getPets()
+    this.props.getPoints()
+    this.props.getBought()
+    this.props.getItems()
   }
 
   // spend = (item) => {
@@ -36,12 +30,13 @@ class App extends Component {
   // }
 
   render(){
- 
+    
     return (
       
       <div>
       {this.props.user ? 
           <div  className="App">
+          {/* {this.props.getPoints(this.props.user)} */}
             <h1 className="header">POCKET DUDES</h1>
           <NavBar/>
           <Route
@@ -80,7 +75,7 @@ class App extends Component {
             }
           />
           <div className='user-points'>
-            Points: {this.props.points ? this.props.points : this.props.user.points}
+            Points: {this.props.points}
           </div>
            </div>
             
@@ -115,7 +110,7 @@ function mdp(dispatch) {
       getPets: () => dispatch(getPets()),
       getItems: () => dispatch(getItems()),
       setVal: (e) => dispatch(setVal(e)),
-      getPoints: (user) => dispatch(getPoints(user))
+      getPoints: () => dispatch(getPoints())
    }
 }
 

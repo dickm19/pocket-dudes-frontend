@@ -14,9 +14,12 @@ import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS,
 //     }
 // }
 
-export function getPoints(user){
-    return function (dispatch) {
-        dispatch({type: GET_POINTS, payload: user.points})
+export function getPoints(){
+    return function (dispatch){
+        fetch("http://localhost:5000/api/v1/users/1")
+        .then(resp => resp.json())
+        .then(data =>  dispatch({type: GET_POINTS, payload: data.user.points}) )
+       
     }
 }
 
