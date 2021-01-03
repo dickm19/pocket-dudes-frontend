@@ -25,4 +25,6 @@ export const SPEND_POINTS = 'SPEND_POINTS'
 export const SET_VAL = 'SET_VAL'
 export const SET_HIGH_SCORE = 'SET_HIGH_SCORE'
 export const GET_POINTS = 'GET_POINTS'
+// export const GET_BOUGHT_BOOL = 'GET_BOUGHT_BOOL'
+// export const SET_BOUGHT_BOOL = 'SET_BOUGHT_BOOL'
 

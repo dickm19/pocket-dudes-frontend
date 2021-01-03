@@ -12,9 +12,10 @@ import './App.css';
 
 class App extends Component {
 
- 
+
     state = {
       images: [],
+      // itemBool: null
     }
 
   componentDidMount(){
@@ -27,6 +28,10 @@ class App extends Component {
 
   // spend = (item) => {
   //    this.setState({points: this.state.points - item.cost})
+  // }
+
+  // setBoughtGlobal = (item) => {
+  //   this.setState({itemBool: item})
   // }
 
   render(){
@@ -64,14 +69,14 @@ class App extends Component {
             exact
             path="/pets"
             render={() => 
-              <PetsContainer happiness={this.props.happiness} hunger={this.props.hunger} history={this.props.history} bought={this.props.bought} pets={this.props.pets} currentPet={this.props.currentPet} user={this.props.user}/>
+              <PetsContainer setBoughtGlobal={this.setBoughtGlobal} itemBool={this.state.itemBool} spend={this.spend} points={this.props.points} happiness={this.props.happiness} hunger={this.props.hunger} history={this.props.history} bought={this.props.bought} pets={this.props.pets} currentPet={this.props.currentPet} user={this.props.user}/>
             }
           />
           <Route
             exact
             path="/shop"
             render={() => 
-              <Shop points={this.props.points} spend={this.spend} bought={this.props.bought} items={this.props.items} user={this.props.user}/>
+              <Shop itemBool={this.state.itemBool} points={this.props.points} spend={this.spend} bought={this.props.bought} items={this.props.items} user={this.props.user}/>
             }
           />
           <div className='user-points'>

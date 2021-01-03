@@ -124,9 +124,10 @@ const PetCard = React.memo(class extends React.Component{
                         }
                     ))
                     .then(() =>{
-                         this.setState({hunger: this.state.hunger + 1})
+                        this.setState({hunger: this.state.hunger + 1})
                         this.props.useItem(boughtCopy)
                         this.props.unBuy(boughtCopy)
+                        this.props.setBoughtGlobal(user_item.item)
                     })
                 }else{
                     this.props.incrementHappiness(this.props.pet)

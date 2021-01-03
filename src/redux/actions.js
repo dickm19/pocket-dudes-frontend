@@ -135,6 +135,18 @@ export function getItems(){
     }
 }
 
+// export function getBoughtBool(item){
+//     return function (dispatch){
+//         dispatch({type: GET_BOUGHT_BOOL, payload: item.bought})
+//     }
+// }
+
+// export function setBoughtBool(currentBoughtBool){
+//     return function (dispatch){
+//         dispatch({type: SET_BOUGHT_BOOL, payload: !currentBoughtBool})
+//     }
+// }
+
 export function buyItem(user_item) {
     return function (dispatch){
        dispatch({type: BUY_ITEM, payload: user_item})

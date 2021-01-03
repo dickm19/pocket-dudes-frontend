@@ -6,14 +6,24 @@ class ItemCard extends Component {
   
     // const {item, this.props.boughtItems, user, buyItem} = this.props
     // const [bought, setBought] = useState(true)
+    state = {bought: this.props.item.bought}
 
-    state = {
-        bought: this.props.item.bought,
-        // points: this.props.user.points
+    componentDidMount(){
+        if (!this.props.boughtItems.includes(this.props.item)){
+            this.setState({bought: false})
+        }
     }
 
+    // componentDidUpdate(){
+    //     if(this.props.itemBool){
+    //         if (this.props.itemBool.item === this.props.item){
+    //             this.setState({bought: false})
+    //         }
+    //     }
+    // }
+
     localBuyItem = () => {
-        if (this.props.user.points > 0){
+        if (this.props.user.points > 0 && !this.props.item.bought){
             Promise.all([
                 fetch(`http://localhost:5000/api/v1/items/${this.props.item.id}`, {
                     method: 'PATCH',
@@ -60,7 +70,9 @@ class ItemCard extends Component {
                     }
                 }
                 // console.log(user_item)
+                // this.props.setBoughtBool(this.props.boughtBool)
                 this.setState({bought: true})
+                // this.props.setBoughtGlobal(true)
                 this.props.buyItem(userItem)
                 this.props.spendPoints(this.props.points - this.props.item.cost)
             })
@@ -69,14 +81,15 @@ class ItemCard extends Component {
     render(){
         // console.log(this.props.points)
         // console.log(this.props.user.points)
+        // console.log(this.props.boughtBool)
         return(
             <>
 
                 <div className='item-card'>
                     <img className="item-image" src={this.props.item.image} alt={this.props.item.name}/>
                     <p>{this.props.item.name}</p>
-                    {this.state.bought ? 
-                        null
+                    { this.state.bought ? 
+                            null
                         :
                         <>
                             <p>Cost: {this.props.item.cost}</p>
@@ -91,11 +104,18 @@ class ItemCard extends Component {
 }
 
 
+// function msp(state) {
+//     return {
+//         boughtBool: state.boughtBool
+//     }
+//   }
 
 function mdp(dispatch) {
     return { 
         buyItem: (item, user) => dispatch(buyItem(item, user)),
-        spendPoints: (points) => dispatch(spendPoints(points))
+        spendPoints: (points) => dispatch(spendPoints(points)),
+        // getBoughtBool: (item) => dispatch(getBoughtBool(item)),
+        // setBoughtBool: (bool) => dispatch(setBoughtBool(bool))
        
      }
 }

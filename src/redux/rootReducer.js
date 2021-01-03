@@ -11,7 +11,8 @@ const defaultState = {
     hunger: null,
     points: 0,
     highScore: 0,
-    val: null
+    val: null,
+    // boughtBool: false
     
 }
 function pointsReducer(state = defaultState.points, action){
@@ -26,6 +27,18 @@ function pointsReducer(state = defaultState.points, action){
             return state
     }
 }
+
+// function boughtBoolReducer(state = defaultState.boughtBool, action){
+//     switch(action.type){
+
+//         case 'GET_BOUGHT_BOOL':
+//             return action.payload
+//         case 'SET_BOUGHT_BOOL':
+//             return action.payload
+//         default:
+//             return state
+//     }
+// }
 
 function highScoreReducer(state = defaultState.highScore, action){
     switch(action.type){
@@ -109,8 +122,8 @@ function boughtReducer( state = defaultState.bought, action){
             return action.payload
         case 'UN_BUY':
             return action.payload
-            default:
-        return state
+        default:
+            return state
     }
 }
 
@@ -145,7 +158,8 @@ const rootReducer = combineReducers({
     hunger: hungerReducer,
     points: pointsReducer,
     val: valReducer,
-    highScore: highScoreReducer
+    highScore: highScoreReducer,
+    // boughtBool: boughtBoolReducer
   });
   
 
