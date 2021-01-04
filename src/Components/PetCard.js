@@ -1,5 +1,5 @@
 import React from 'react'
-import { useItem, incrementHappiness, incrementHunger, getPetHappiness, getPetHunger, decrementHappiness, decrementHunger, unBuy } from '../redux/actions';
+import { useItem, incrementHappiness, incrementHunger, getPetHappiness, getPetHunger,  decrementHappiness, decrementHunger } from '../redux/actions';
 import { connect } from 'react-redux'
 import './PetCard.css'
 
@@ -104,7 +104,7 @@ const PetCard = React.memo(class extends React.Component{
                         fetch(`http://localhost:5000/api/v1/user_items/${user_item.id}`, {
                             method: 'DELETE'
                         }),
-                        fetch(`http://localhost:5000/api/v1/items/${user_item.id}`, {
+                        fetch(`http://localhost:5000/api/v1/items/${user_item.item.id}`, {
                             method: 'PATCH',
                             headers: {
                                 "Content-Type": 'application/json',
@@ -126,8 +126,10 @@ const PetCard = React.memo(class extends React.Component{
                     .then(() =>{
                         this.setState({hunger: this.state.hunger + 1})
                         this.props.useItem(boughtCopy)
-                        this.props.unBuy(boughtCopy)
-                        this.props.setBoughtGlobal(user_item.item)
+                        // this.forceUpdate()
+                        // this.props.unBuy(boughtCopy)
+                        // this.props.setItemBool(user_item.item, boughtCopy)
+                        // this.props.setBoughtGlobal(user_item.item)
                     })
                 }else{
                     this.props.incrementHappiness(this.props.pet)
@@ -145,7 +147,7 @@ const PetCard = React.memo(class extends React.Component{
                         fetch(`http://localhost:5000/api/v1/user_items/${user_item.id}`, {
                             method: 'DELETE'
                         }),
-                        fetch(`http://localhost:5000/api/v1/items/${user_item.id}`, {
+                        fetch(`http://localhost:5000/api/v1/items/${user_item.item.id}`, {
                             method: 'PATCH',
                             headers: {
                                 "Content-Type": 'application/json',
@@ -167,33 +169,13 @@ const PetCard = React.memo(class extends React.Component{
                     .then(() =>{
                          this.setState({happiness: this.state.happiness + 1})
                         this.props.useItem(boughtCopy)
-                        this.props.unBuy(boughtCopy)
+                        // this.props.setItemBool(user_item.item, boughtCopy)
                     })
                 }
             }
         }
     }
 
-    // feedPet = (pet) => {
-        
-    // }
-    // playWithPet = (pet) => {
-    //     fetch(`${petsUrl}/${pet.id}`, {
-    //         method: 'PATCH',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accepts': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             happiness: pet.happiness + 1
-    //         })
-    //     })
-    //     .then(resp => resp.json())
-    //     .then(() => {
-    //         window.location.reload()
-    //         this.setState({happiness: pet.happiness + 1})
-    //     })
-    // }
     // localSetCurrentPet = () => {
         
     //     if (this.props.pet === this.props.currentPet){
@@ -255,7 +237,8 @@ function mdp(dispatch) {
         getHappiness: (pet) => dispatch(getPetHappiness(pet)),
         getHunger: (pet) => dispatch(getPetHunger(pet)),
         // unsetCurrentPet: (pet) => dispatch(unsetCurrentPet(pet)),
-        unBuy: (item, bought) => dispatch(unBuy(item, bought))
+        // unBuy: (item, bought) => dispatch(unBuy(item, bought)),
+        // setItemBool: (item, bought) => dispatch(setItemBool(item, bought))
      }
 }
 export default connect(null, mdp)(PetCard);

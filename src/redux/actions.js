@@ -1,4 +1,4 @@
-import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, UN_BUY, AWARD_POINTS, SET_VAL, SET_HIGH_SCORE, SPEND_POINTS, GET_POINTS} from './actionTypes'
+import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, AWARD_POINTS, SET_VAL, SET_HIGH_SCORE, SPEND_POINTS, GET_POINTS} from './actionTypes'
 
 // FETCH_PETS, ADD_PET, 
 
@@ -11,6 +11,29 @@ import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS,
 // export function unsetCurrentPet() {
 //     return function (dispatch) {
 //         dispatch({type: UNSET_CURRENT_PET, payload: null})
+//     }
+// }
+
+// export function getItemBools(){
+//     return function (dispatch){
+//         fetch('http://localhost:5000/api/v1/items')
+//         .then(resp => resp.json())
+//         .then(data => {
+//             const items = [...data]
+//             let itemBools = items.map(itemObj => {
+//                 return {item: itemObj, bool: itemObj.bought}
+//             })
+//             dispatch({type: GET_ITEM_BOOLS, payload: itemBools})
+//         })
+//     }
+// }
+
+// export function setItemBool(item, itemBools){
+//     return function (dispatch){
+//         const itemBoolsCopy = [...itemBools]
+//         const foundItemBool = itemBoolsCopy.find(itemBoolObj => itemBoolObj.item === item)
+//         foundItemBool.bool = false
+//         dispatch({type: SET_ITEM_BOOL, payload: itemBoolsCopy })
 //     }
 // }
 
@@ -242,8 +265,3 @@ export function useItem( boughtCopy){
 //     }
 
 // }
-export function unBuy(boughtCopy){
-    return function(dispatch){
-       dispatch({type: UN_BUY, payload: boughtCopy})
-    }
-}

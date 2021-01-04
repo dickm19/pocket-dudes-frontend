@@ -1,29 +1,35 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { buyItem, spendPoints } from '../redux/actions';
 import { connect } from 'react-redux'
 import '../Containers/Shop.css'
-class ItemCard extends Component {
+const ItemCard = React.memo(class extends PureComponent {
   
     // const {item, this.props.boughtItems, user, buyItem} = this.props
     // const [bought, setBought] = useState(true)
-    state = {bought: this.props.item.bought}
-
-    componentDidMount(){
-        if (!this.props.boughtItems.includes(this.props.item)){
-            this.setState({bought: false})
-        }
+    state = {
+        // itemBools: this.props.itemBools,
+        bought: this.props.boughtItems.includes(this.props.item) || this.props.item.bought,
+        points: this.props.user.points
     }
 
-    // componentDidUpdate(){
-    //     if(this.props.itemBool){
-    //         if (this.props.itemBool.item === this.props.item){
-    //             this.setState({bought: false})
-    //         }
+
+    // componentDidUpdate(prevProps){
+    //    if (!this.props.bought !== prevProps.bought){
+    //         this.setState({bought: false})
     //     }
     // }
 
+//    findMatch = () => {
+//        if (this.props.itemBools.length > 0){
+//            const foundItem = this.props.itemBools.find(itemBool => itemBool.item === this.props.item)
+//            if (foundItem){
+//                return foundItem.bool
+//            }
+//        }
+//    }
+
     localBuyItem = () => {
-        if (this.props.user.points > 0 && !this.props.item.bought){
+        if (this.props.user.points > 0 && this.state.points > 0 && !this.state.bought && !this.props.boughtItems.includes(this.props.item)){
             Promise.all([
                 fetch(`http://localhost:5000/api/v1/items/${this.props.item.id}`, {
                     method: 'PATCH',
@@ -71,8 +77,12 @@ class ItemCard extends Component {
                 }
                 // console.log(user_item)
                 // this.props.setBoughtBool(this.props.boughtBool)
-                this.setState({bought: true})
+                this.setState({
+                    bought: true,
+                    points: this.props.points - this.props.item.cost
+                })
                 // this.props.setBoughtGlobal(true)
+                // this.forceUpdate()
                 this.props.buyItem(userItem)
                 this.props.spendPoints(this.props.points - this.props.item.cost)
             })
@@ -82,6 +92,8 @@ class ItemCard extends Component {
         // console.log(this.props.points)
         // console.log(this.props.user.points)
         // console.log(this.props.boughtBool)
+        // console.log(this.props.itemBools)
+        console.log('state:', this.state.bought, 'Props:', this.props.item.bought )
         return(
             <>
 
@@ -101,7 +113,7 @@ class ItemCard extends Component {
         )
         
     }
-}
+})
 
 
 // function msp(state) {

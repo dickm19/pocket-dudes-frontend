@@ -13,7 +13,7 @@ import * as serviceWorker from './serviceWorker';
 const store = createStore(rootReducer, applyMiddleware(thunk))
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter forceRefresh={true}>
       <App />
     </BrowserRouter>
   </Provider>,

@@ -12,6 +12,7 @@ const defaultState = {
     points: 0,
     highScore: 0,
     val: null,
+    itemBools: []
     // boughtBool: false
     
 }
@@ -39,6 +40,17 @@ function pointsReducer(state = defaultState.points, action){
 //             return state
 //     }
 // }
+
+function itemBoolsReducer(state = defaultState.itemBools, action){
+    switch(action.type){
+        case 'GET_ITEM_BOOLS':
+            return action.payload
+        case 'SET_ITEM_BOOL':
+            return action.payload
+        default:
+            return state
+    }
+}
 
 function highScoreReducer(state = defaultState.highScore, action){
     switch(action.type){
@@ -120,8 +132,6 @@ function boughtReducer( state = defaultState.bought, action){
             return [...state, action.payload]
         case 'USE_ITEM':
             return action.payload
-        case 'UN_BUY':
-            return action.payload
         default:
             return state
     }
@@ -159,6 +169,7 @@ const rootReducer = combineReducers({
     points: pointsReducer,
     val: valReducer,
     highScore: highScoreReducer,
+    itemBools: itemBoolsReducer
     // boughtBool: boughtBoolReducer
   });
   

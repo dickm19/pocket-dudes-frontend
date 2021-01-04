@@ -4,7 +4,7 @@ import ItemCard from '../Components/ItemCard'
 import ItemBar from './ItemBar'
 import 'react-dropdown/style.css';
 
-    export default function Shop({items, user, bought, points, spend, itemBool}){
+    export default function Shop({ items, user, bought, points, spend}){
 
     const [selection, setSelection] = useState('all')
 
@@ -12,13 +12,13 @@ import 'react-dropdown/style.css';
     const filteredItems = () => {
         // console.log(bought)
         if (selection === 'all'){
-            return items.map(itemObj => {
-                   return <ItemCard  itemBool={itemBool} points={points} spend={spend} boughtItems={boughtItems} user={user} key={itemObj.id} item={itemObj}/>
+            return items.map(item => {
+                   return <ItemCard   points={points} spend={spend} boughtItems={boughtItems} user={user} key={item.id} item={item}/>
             })
         }else{
             const filterSelection  = selection.replace('s', '')
-            const filtered = items.filter(itemObj => itemObj.kind === filterSelection)
-            return filtered.map(itemObj => <ItemCard  itemBool={itemBool} points={points} spend={spend} boughtItems={boughtItems} user={user} key={itemObj.id} item={itemObj}/>)
+            const filtered = items.filter(item => item.kind === filterSelection)
+            return filtered.map(item => <ItemCard   points={points} spend={spend} boughtItems={boughtItems} user={user} key={item.id} item={item}/>)
         }
     }
 
@@ -31,7 +31,7 @@ import 'react-dropdown/style.css';
     return(
         <> 
             <div className='item-bar'>
-                <ItemBar itemBool={itemBool} points={points} spend={spend} boughtItems={boughtItems} user={user}/>
+                <ItemBar  points={points} spend={spend} boughtItems={boughtItems} user={user}/>
             </div>
             <div className='shop-pge'>
             <div className='dropdown'>
