@@ -69,6 +69,7 @@ a{
 
 .item-bar{
   grid-area: itembar;
+  text-align: center;
   height: 80vh;
   overflow: scroll;
 }

@@ -56,7 +56,7 @@ class AdoptPet extends React.Component{
         return(
             <div className="adopt-pet">
                 <form onSubmit={this.handleFormSubmit} className="adopt-pet-form">
-                    Click to choose an image<br/>
+                    Click to choose pet!<br/>
                     {this.state.images.length > 0 ?
                         <>
                             <img className='adopt-pet-img' onClick={() => this.handleImgClick()} src={this.state.images[this.state.count].image_url} alt='pet'/><br/>

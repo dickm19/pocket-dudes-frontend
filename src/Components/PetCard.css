@@ -1,7 +1,20 @@
+.pet-card{
+  font-family: 'Chewy', cursive;
+  color: rgb(41, 37, 87);
+}
 .pet-image{
-    transform-box: scale(0.3)
+    height: 40vh;
+    transform-box: scale(0.3);
 }
 
 .care-button{
     border-radius: 20%;
+}
+
+.happiness{
+  font-size: 30px;
+}
+
+.hunger{
+  font-size: 30px;
 }

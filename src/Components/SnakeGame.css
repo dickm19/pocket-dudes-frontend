@@ -1,4 +1,4 @@
-.snake-game{
-    transform: scale(0.6);
-    padding: 0;
+.game{
+    transform: scale(0.4);
+    margin: 0;
 }

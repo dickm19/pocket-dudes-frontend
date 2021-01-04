@@ -29,7 +29,7 @@ const ItemCard = React.memo(class extends PureComponent {
 //    }
 
     localBuyItem = () => {
-        if (this.props.user.points > 0 && this.state.points > 0 && !this.state.bought && !this.props.boughtItems.includes(this.props.item)){
+        if (this.props.points > 0 && !this.state.bought){
             Promise.all([
                 fetch(`http://localhost:5000/api/v1/items/${this.props.item.id}`, {
                     method: 'PATCH',
@@ -61,7 +61,6 @@ const ItemCard = React.memo(class extends PureComponent {
                     body: JSON.stringify({points: this.props.points - this.props.item.cost})
                 })
             ])
-            
             .then(([res1, res2, res3]) => (
                 Promise.all([res1.json(), res2.json(), res3.json()])
             ))
@@ -89,11 +88,6 @@ const ItemCard = React.memo(class extends PureComponent {
         }
    }
     render(){
-        // console.log(this.props.points)
-        // console.log(this.props.user.points)
-        // console.log(this.props.boughtBool)
-        // console.log(this.props.itemBools)
-        console.log('state:', this.state.bought, 'Props:', this.props.item.bought )
         return(
             <>
 
