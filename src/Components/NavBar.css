@@ -1,2 +1,7 @@
-
-
+.navbar span{
+    display: block;
+    padding: 15px;
+}
+.navbar {
+    padding-top: 30px;
+}

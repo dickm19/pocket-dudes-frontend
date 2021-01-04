@@ -1,6 +1,5 @@
 .pet-image{
-    height: 200px;
-    width: 150px;
+    transform-box: scale(0.3)
 }
 
 .care-button{

@@ -2,6 +2,7 @@ import Snake from 'react-simple-snake'
 import React from 'react'
 import { awardPoints, setHighScore } from '../redux/actions';
 import { connect } from 'react-redux'
+import './SnakeGame.css'
 
 class SnakeGame extends React.Component {
 
@@ -56,7 +57,7 @@ class SnakeGame extends React.Component {
         return(
             <div  className="snake-game">
                 <h4 className='snake-header'>Beat Your High Score to Earn Points!</h4>
-                {this.state.clicked ? null : <Snake percentageWidth={100}/>}
+                {this.state.clicked ? null : <div className='game'><Snake percentageWidth={100}/></div>}
                 {this.state.clicked ? 
                    (this.state.userHighScore === this.state.currentHighScore) ? 
                         null 
