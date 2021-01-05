@@ -11,20 +11,11 @@
 
 .item-card{
     flex: 0 0 25%;
-
-    /* color: blue; */
+    font-family: 'Chewy', cursive;
+    color: rgb(98, 50, 135);
 }
+
 .item-card .item-image{
    width: 50px;
    height: 50px;
-}
-.buy-btn{
-    border-radius: 20px;
-    background-color: rgb(242, 165, 222);
-    color: rebeccapurple;
-    transition: 0.3s;
-}
-
-.buy-btn:hover{
-    background-color: pink;
 }

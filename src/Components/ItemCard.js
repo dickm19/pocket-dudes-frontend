@@ -29,7 +29,7 @@ const ItemCard = React.memo(class extends PureComponent {
 //    }
 
     localBuyItem = () => {
-        if (this.props.points > 0 && !this.state.bought){
+        if (this.props.points > 0 && this.props.user.points > 0 && (this.props.points - this.props.item.cost >= 0)){
             Promise.all([
                 fetch(`http://localhost:5000/api/v1/items/${this.props.item.id}`, {
                     method: 'PATCH',

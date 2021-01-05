@@ -9,19 +9,34 @@
 
 }
 body{
-  background-color: rgb(135, 155, 235);
+  /* background-color: rgb(153, 166, 220); */
+  /* background-color: rgb(181, 159, 213); */
+  /* background-color: rgb(251, 200, 156); */
+  background-color: rgb(247, 209, 114);
 }
 
 .snake-game{
   grid-area: main;
+  margin: auto;
+  margin-top: 0;
+  text-align: center;
+  height: 50vh;
+  width: 70vh;
+  color: rgb(131, 106, 150);
+  font-family: 'Chewy', cursive;
+  font-size: 4vh;
 }
-
+#game{
+  transform: scale(1.2);
+  margin-bottom: 10vh;
+}
 
 .user-points{
   grid-area: points;
   margin-top: 15vh;
   font-family: 'Chewy', cursive;
-  color: rgb(121, 65, 189);
+  color: rgb(98, 50, 135);
+  font-size: 3.5vh;
 }
 
 .navbar{
@@ -39,26 +54,26 @@ body{
 }
 a{
   font-size: 5vh;
-  color: rgb(242, 165, 222);
+  color: rgb(98, 50, 135);
   transition: 0.3s;
   text-decoration: none;
 }
 
 
 .navbar #adopt:hover{
-  color: pink;
+  color: rgb(195, 99, 191);
 }
 
 .navbar #pets:hover{
-  color: pink;
+  color: rgb(195, 99, 191);
 }
 
 .navbar #shop:hover{
-  color: pink;
+    color: rgb(195, 99, 191);
 }
 
 .navbar #game:hover{
-  color: pink;
+    color: rgb(195, 99, 191);
 }
 
 .pets-container{
@@ -66,12 +81,22 @@ a{
   height: 80vh;
   overflow: scroll;
 }
+button{
+  border-radius: 20px;
+  background-color: rgb(213, 127, 200);
+  color: rgb(83, 42, 123);
+  transition: 0.3s;
+}
 
+button:hover{
+  background-color: rgb(251, 231, 159);
+}
 .item-bar{
   grid-area: itembar;
   text-align: center;
   height: 80vh;
   overflow: scroll;
+  color: rgb(98, 50, 135);
 }
 
 .item-bar .items-header{
@@ -85,11 +110,17 @@ a{
 }
 .adopt-pet{
   grid-area: main;
+  font-family: 'Chewy', cursive;
+  color: rgb(98, 50, 135);
   text-align: center
+}
+.adopt-pet .adopt-text{
+  font-size: 5vh;
 }
 
 .shop{
   grid-area: main;
+  /* margin-top: 20vh; */
   height: 80vh;
   overflow: scroll;
 }
@@ -97,10 +128,8 @@ a{
 .header{
   grid-area: header;
   text-align: center;
-  font-size: 6vh;
-  color: rgb(29, 20, 125);
-  border: 2px solid white;
-  /* font-family: 'Cabin Sketch', cursive; */
+  font-size: 10vh;
+  color: rgb(98, 50, 135);
   font-family: 'Love Ya Like A Sister', cursive;
 }
 ::-webkit-scrollbar {

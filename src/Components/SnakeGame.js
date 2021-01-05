@@ -57,7 +57,7 @@ class SnakeGame extends React.Component {
         return(
             <div  className="snake-game">
                 <h4 className='snake-header'>Beat Your High Score to Earn Points!</h4>
-                {this.state.clicked ? null : <div className='game'><Snake percentageWidth={100}/></div>}
+                {this.state.clicked ? null : <div id='game'><Snake percentageWidth={100}/></div>}
                 {this.state.clicked ? 
                    (this.state.userHighScore === this.state.currentHighScore) ? 
                         null 
