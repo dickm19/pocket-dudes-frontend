@@ -17,11 +17,11 @@ const PetCard = React.memo(class extends React.Component{
      componentDidMount(){
         setInterval(() => {
                 this.decrementHappiness()
-        }, 1*10000)
+        }, 1*5000)
 
         setInterval(() => {
             (this.decrementHunger())
-        }, 1*10000)
+        }, 1*5000)
     }
 
 

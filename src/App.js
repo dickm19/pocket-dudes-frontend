@@ -40,6 +40,7 @@ class App extends Component {
     return (
       
       <div>
+        
       {this.props.user ? 
           <div  className="App">
           {/* {this.props.getPoints(this.props.user)} */}

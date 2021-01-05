@@ -4,8 +4,8 @@
                         "navbar main itembar"
                         "points main itembar";
 
-  grid-template-rows: 15vh 60vh 6vh;
-  grid-template-columns: 15vh 1fr;
+  grid-template-rows: 15vh 70vh;
+  grid-template-columns: 20vh 1fr 30vh;
 
 }
 body{
@@ -17,7 +17,8 @@ body{
 
 .snake-game{
   grid-area: main;
-  margin: auto;
+  /* margin-top: auto; */
+  margin-left: 42vh;
   margin-top: 0;
   text-align: center;
   height: 50vh;
@@ -26,6 +27,9 @@ body{
   font-family: 'Chewy', cursive;
   font-size: 4vh;
 }
+.snake-game button{
+  margin-top: 2vh;
+}
 #game{
   transform: scale(1.2);
   margin-bottom: 10vh;
@@ -33,7 +37,7 @@ body{
 
 .user-points{
   grid-area: points;
-  margin-top: 15vh;
+  margin-top: 10vh;
   font-family: 'Chewy', cursive;
   color: rgb(98, 50, 135);
   font-size: 3.5vh;
@@ -54,26 +58,26 @@ body{
 }
 a{
   font-size: 5vh;
-  color: rgb(98, 50, 135);
+  color: rgb(203, 137, 158);
   transition: 0.3s;
   text-decoration: none;
 }
 
 
 .navbar #adopt:hover{
-  color: rgb(195, 99, 191);
+  color:  rgb(215, 78, 133);
 }
 
 .navbar #pets:hover{
-  color: rgb(195, 99, 191);
+  color:  rgb(215, 78, 133);
 }
 
 .navbar #shop:hover{
-    color: rgb(195, 99, 191);
+    color:  rgb(215, 78, 133);
 }
 
 .navbar #game:hover{
-    color: rgb(195, 99, 191);
+    color: rgb(215, 78, 133);
 }
 
 .pets-container{
@@ -81,7 +85,11 @@ a{
   height: 80vh;
   overflow: scroll;
 }
-button{
+
+.pets-container h1{
+  color:rgb(203, 137, 158);
+}
+/* button{
   border-radius: 20px;
   background-color: rgb(213, 127, 200);
   color: rgb(83, 42, 123);
@@ -90,7 +98,7 @@ button{
 
 button:hover{
   background-color: rgb(251, 231, 159);
-}
+} */
 .item-bar{
   grid-area: itembar;
   text-align: center;
@@ -100,19 +108,21 @@ button:hover{
 }
 
 .item-bar .items-header{
+  grid-area: items-header;
   text-align: center;
   font-family: 'Chewy', cursive;
 }
 
 .adopt-pet-img{
-  width: 500px;
-  height: 550px;
+  width: 50vh;
+  height: 55vh;
 }
 .adopt-pet{
   grid-area: main;
   font-family: 'Chewy', cursive;
   color: rgb(98, 50, 135);
-  text-align: center
+  text-align: center;
+  /* margin-right: 0vh; */
 }
 .adopt-pet .adopt-text{
   font-size: 5vh;
@@ -120,14 +130,66 @@ button:hover{
 
 .shop{
   grid-area: main;
-  /* margin-top: 20vh; */
-  height: 80vh;
+  margin-top: 10vh;
+  height: 75vh;
   overflow: scroll;
 }
 
+input{
+  text-shadow: 1px 1px 0 #fff;
+  box-shadow: inset 2px 2px 5px#babecc, inset -5px -5px 10px #fff;
+  /* width: 100%; */
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  color: #67676a;
+  outline: 0;
+  border-radius: 20%;
+  border: transparent;
+  height: 4vh;
+  background-color: rgb(255, 255, 255);
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: -0.2px;
+  margin-right: 2vh;
+  /* &:focus {
+    box-shadow: inset 1px 1px 2px #babecc,
+      inset -1px -1px 2px #fff;
+  } */
+}
+button {
+  /* color: $color-shadow; */
+  margin-left: 2vh;
+  background-color: rgb(219, 185, 237);
+  text-shadow: 1px 1px 0 #fff;
+  border: transparent;
+  height: 5vh;
+  border-radius: 25%;
+  color: #61677c;
+  font-weight: bold;
+  box-shadow: -2px -2px 10px #fff, 5px 5px 20px #babecc;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+  button:hover {
+    box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
+  }
+
+  button:active {
+    box-shadow: inset 1px 1px 2px #babecc,
+      inset -1px -1px 2px #fff;
+  }
+
+
+.dropdown{
+  grid-area:main;
+  /* width: 5vh; */
+}
 .header{
   grid-area: header;
-  text-align: center;
+  margin: auto;
+  margin-left: 65vh;
   font-size: 10vh;
   color: rgb(98, 50, 135);
   font-family: 'Love Ya Like A Sister', cursive;

@@ -33,13 +33,11 @@ import 'react-dropdown/style.css';
             <div className='item-bar'>
                 <ItemBar  points={points} spend={spend} boughtItems={boughtItems} user={user}/>
             </div>
-            <div className='shop-pge'>
             <div className='dropdown'>
-            <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
+                <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
             </div>
             <div className="shop">
                 {filteredItems()}
-            </div>
             </div>
         </>
     )

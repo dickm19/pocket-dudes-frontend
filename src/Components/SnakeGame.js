@@ -2,7 +2,8 @@ import Snake from 'react-simple-snake'
 import React from 'react'
 import { awardPoints, setHighScore } from '../redux/actions';
 import { connect } from 'react-redux'
-import './SnakeGame.css'
+import PetsContainer from '../Containers/PetsContainer'
+// import './SnakeGame.css'
 
 class SnakeGame extends React.Component {
 
@@ -19,7 +20,7 @@ class SnakeGame extends React.Component {
     }
 
     localAwardPoints = () => {
-        const points = parseInt(localStorage.snakeHighScore) + parseInt(this.props.points)
+        const points = (parseInt(localStorage.snakeHighScore) + parseInt(this.props.points))*2
         if (this.props.user){
             this.setHighScore(parseInt(localStorage.snakeHighScore))
             this.props.awardPoints(points, this.props.user)
@@ -51,21 +52,19 @@ class SnakeGame extends React.Component {
     }
 
     render(){
-        // console.log(this.props.user['high_score'] === parseInt(localStorage.snakeHighScore))
-        // console.log(this.props.key)
-        // console.log('user:', this.props.user['high_score'], 'local:', localStorage.snakeHighScore)
         return(
             <div  className="snake-game">
-                <h4 className='snake-header'>Beat Your High Score to Earn Points!</h4>
-                {this.state.clicked ? null : <div id='game'><Snake percentageWidth={100}/></div>}
+                {this.state.clicked ? <h4 className='snake-header'>Good Game!</h4> : <h4 className='snake-header'>Beat Your High Score to Earn Points!</h4>}
+                {this.state.clicked ? null : <div id='game'><Snake startSnakeSize={3} percentageWidth={100}/></div>}
                 {this.state.clicked ? 
                    (this.state.userHighScore === this.state.currentHighScore) ? 
                         null 
                    : 
-                        <button className="points-button" onClick={this.localAwardPoints}>Collect Points! {localStorage.snakeHighScore}</button> 
+                        <button className="points-button" onClick={this.localAwardPoints}>Collect Points! {(parseInt(localStorage.snakeHighScore) + parseInt(this.props.points))*2}</button> 
                 :
                     null}
-                   <button className='toggle-game-button' onClick={this.handleEndGame}>{this.state.clicked ? "Play Again" : 'Done Playing'}</button>
+                <button className='toggle-game-button' onClick={this.handleEndGame}>{this.state.clicked ? "Play Again" : 'End Game'}</button>
+                
             </div>
         )
     }
