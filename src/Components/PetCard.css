@@ -1,6 +1,8 @@
 .pet-card{
   font-family: 'Chewy', cursive;
   color: rgb(98, 50, 135);
+  font-size: 30px;
+
 
 }
 .pet-image{
@@ -12,10 +14,9 @@
     border-radius: 20%;
 }
 
-.happiness{
-  font-size: 30px;
+/* .happiness{
 }
 
 .hunger{
   font-size: 30px;
-}
+} */

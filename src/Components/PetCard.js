@@ -230,7 +230,7 @@ const PetCard = React.memo(class extends React.Component{
                 <img className='pet-image' src={this.state.happiness === 0 && this.state.hunger === 0 ? deadImage : this.state.image} alt={this.props.pet.name}/>
                 <div classNmae='emotions'>
                     <p className='happiness'>Happiness: {this.state.happiness}/10 {this.renderEmotion()}</p>
-                    <p className='hunger'>Hunger: {this.state.hunger}/10 {this.renderHealth()}</p>
+                    <p className='hunger'>Health: {this.state.hunger}/10 {this.renderHealth()}</p>
                 </div>
                     <div>
                         {this.state.happiness === 0 && this.state.hunger === 0 ?

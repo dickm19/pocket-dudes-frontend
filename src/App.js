@@ -15,7 +15,6 @@ class App extends Component {
 
     state = {
       images: [],
-      // itemBool: null
     }
 
   componentDidMount(){
@@ -24,26 +23,16 @@ class App extends Component {
     this.props.getPoints()
     this.props.getBought()
     this.props.getItems()
-    // this.props.getItemBools()
   }
 
-  // spend = (item) => {
-  //    this.setState({points: this.state.points - item.cost})
-  // }
-
-  // setBoughtGlobal = (item) => {
-  //   this.setState({itemBool: item})
-  // }
-
+  
   render(){
-    // console.log(this.props.bought)
     return (
       
       <div>
         
       {this.props.user ? 
           <div  className="App">
-          {/* {this.props.getPoints(this.props.user)} */}
             <h1 className="header">POCKET DUDES</h1>
           <NavBar/>
           <Route
@@ -106,7 +95,6 @@ function msp(state) {
       happiness: state.happiness,
       hunger: state.hunger,
       points: state.points,
-      // itemBools: state.itemBools
   }
 }
 
@@ -119,7 +107,6 @@ function mdp(dispatch) {
       getItems: () => dispatch(getItems()),
       setVal: (e) => dispatch(setVal(e)),
       getPoints: () => dispatch(getPoints()),
-      // getItemBools: () => dispatch(getItemBools())
    }
 }
 

@@ -20,7 +20,7 @@ class SnakeGame extends React.Component {
     }
 
     localAwardPoints = () => {
-        const points = (parseInt(localStorage.snakeHighScore) + parseInt(this.props.points))*2
+        const points = ((parseInt(localStorage.snakeHighScore) * 2) + parseInt(this.props.points))
         if (this.props.user){
             this.setHighScore(parseInt(localStorage.snakeHighScore))
             this.props.awardPoints(points, this.props.user)
@@ -60,7 +60,7 @@ class SnakeGame extends React.Component {
                    (this.state.userHighScore === this.state.currentHighScore) ? 
                         null 
                    : 
-                        <button className="points-button" onClick={this.localAwardPoints}>Collect Points! {(parseInt(localStorage.snakeHighScore) + parseInt(this.props.points))*2}</button> 
+                        <button className="points-button" onClick={this.localAwardPoints}>Collect Points! { parseInt(localStorage.snakeHighScore) * 2 }</button> 
                 :
                     null}
                 <button className='toggle-game-button' onClick={this.handleEndGame}>{this.state.clicked ? "Play Again" : 'End Game'}</button>

@@ -44,6 +44,7 @@ class AdoptPet extends React.Component{
         }
          this.props.addPet(petObj)
          this.props.history.push('/pets')
+         window.location.reload()
     }
 
     handleNameChange = (e) => {

@@ -34,7 +34,7 @@ import 'react-dropdown/style.css';
                 <ItemBar  points={points} spend={spend} boughtItems={boughtItems} user={user}/>
             </div>
             <div className='dropdown'>
-                <Dropdown options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
+                <Dropdown className='dropdown' options={options} onChange={selectOption} value={selection} placeholder="Select an option" />
             </div>
             <div className="shop">
                 {filteredItems()}
