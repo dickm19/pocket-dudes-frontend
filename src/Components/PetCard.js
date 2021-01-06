@@ -17,11 +17,11 @@ const PetCard = React.memo(class extends React.Component{
      componentDidMount(){
         setInterval(() => {
                 this.decrementHappiness()
-        }, 1*5000)
+        }, 1*6000)
 
         setInterval(() => {
             (this.decrementHunger())
-        }, 1*5000)
+        }, 1*6000)
     }
 
 
@@ -90,7 +90,7 @@ const PetCard = React.memo(class extends React.Component{
     
     interactWithPet = (itemType, need) => {
         // console.log(this.props.pet[need])
-        if (this.state[need] < 10){
+        if (this.state[need] < 10 && this.props.pet[need] < 10){
             const boughtItems = this.props.bought.filter(user_item => user_item.item.kind === itemType)
             if (boughtItems.length > 0){
                 const user_item = boughtItems[0]
@@ -228,7 +228,7 @@ const PetCard = React.memo(class extends React.Component{
             <div  className='pet-card'>
                 <p>{this.props.pet.name}</p>
                 <img className='pet-image' src={this.state.happiness === 0 && this.state.hunger === 0 ? deadImage : this.state.image} alt={this.props.pet.name}/>
-                <div classNmae='emotions'>
+                <div className='emotions'>
                     <p className='happiness'>Happiness: {this.state.happiness}/10 {this.renderEmotion()}</p>
                     <p className='hunger'>Health: {this.state.hunger}/10 {this.renderHealth()}</p>
                 </div>

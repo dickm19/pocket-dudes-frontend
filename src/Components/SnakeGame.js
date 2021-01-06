@@ -2,7 +2,6 @@ import Snake from 'react-simple-snake'
 import React from 'react'
 import { awardPoints, setHighScore } from '../redux/actions';
 import { connect } from 'react-redux'
-import PetsContainer from '../Containers/PetsContainer'
 // import './SnakeGame.css'
 
 class SnakeGame extends React.Component {

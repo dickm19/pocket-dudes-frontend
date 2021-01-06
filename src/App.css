@@ -82,7 +82,7 @@ a{
 
 .pets-container{
   grid-area: main;
-  height: 80vh;
+  height: 85vh;
   overflow: scroll;
 }
 
