@@ -39,7 +39,7 @@ class App extends Component {
             exact
             path="/"
             render={() =>
-                <Redirect to="/pets" />
+                <Redirect to="/adopt" />
             }
           />
           <Route
