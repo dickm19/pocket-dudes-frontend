@@ -28,5 +28,3 @@ localhost:3000
 ```
 
 
-## Reflection
-
