@@ -1,42 +1,5 @@
 import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, AWARD_POINTS, SET_VAL, SET_HIGH_SCORE, SPEND_POINTS, GET_POINTS} from './actionTypes'
 
-// FETCH_PETS, ADD_PET, 
-
-// export function setCurrentPet(pet) {
-//     return function (dispatch) {
-//         dispatch({type: SET_CURRENT_PET, payload: pet})
-//     }
-// }
-
-// export function unsetCurrentPet() {
-//     return function (dispatch) {
-//         dispatch({type: UNSET_CURRENT_PET, payload: null})
-//     }
-// }
-
-// export function getItemBools(){
-//     return function (dispatch){
-//         fetch('http://localhost:5000/api/v1/items')
-//         .then(resp => resp.json())
-//         .then(data => {
-//             const items = [...data]
-//             let itemBools = items.map(itemObj => {
-//                 return {item: itemObj, bool: itemObj.bought}
-//             })
-//             dispatch({type: GET_ITEM_BOOLS, payload: itemBools})
-//         })
-//     }
-// }
-
-// export function setItemBool(item, itemBools){
-//     return function (dispatch){
-//         const itemBoolsCopy = [...itemBools]
-//         const foundItemBool = itemBoolsCopy.find(itemBoolObj => itemBoolObj.item === item)
-//         foundItemBool.bool = false
-//         dispatch({type: SET_ITEM_BOOL, payload: itemBoolsCopy })
-//     }
-// }
-
 export function getPoints(){
     return function (dispatch){
         fetch("http://localhost:5000/api/v1/users/1")
@@ -62,11 +25,7 @@ export function getPetHappiness(pet) {
         dispatch({type: GET_PET_HAPPINESS, payload: pet.happiness})
     }
 }
-// export function getPoints(user) {
-//     return function (dispatch) {
-//         dispatch({type: GET_POINTS, payload: user.points})
-//     }
-// }
+
 
 export function spendPoints(points) {
     return function (dispatch){
@@ -118,38 +77,7 @@ export function decrementHunger(pet){
         dispatch({type: DECREMENT_HUNGER, payload: pet.hunger - 1 })
     }
 }
-// export function decrementPetHappiness(pet){
-//     return function (dispatch) {
-//         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
-//             method: 'PATCH',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Accepts': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 happiness: pet.happiness - 1
-//             })
-//         })
-//         .then(resp => resp.json())
-//         .then(data => dispatch({type: DECREMENT_PET_HAPPINESS, payload: data}))
-//     }
-// }
-// export function decrementPetHunger(pet){
-//     return function (dispatch) {
-//         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
-//             method: 'PATCH',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Accepts': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 hunger: pet.hunger - 1
-//             })
-//         })
-//         .then(resp => resp.json())
-//         .then(data => dispatch({type: DECREMENT_PET_HUNGER, payload: data}))
-//     }
-// }
+
 export function getItems(){
     return function (dispatch){
         fetch('http://localhost:5000/api/v1/items')
@@ -157,18 +85,6 @@ export function getItems(){
         .then(data => dispatch({type: GET_ITEMS, payload: data}))
     }
 }
-
-// export function getBoughtBool(item){
-//     return function (dispatch){
-//         dispatch({type: GET_BOUGHT_BOOL, payload: item.bought})
-//     }
-// }
-
-// export function setBoughtBool(currentBoughtBool){
-//     return function (dispatch){
-//         dispatch({type: SET_BOUGHT_BOOL, payload: !currentBoughtBool})
-//     }
-// }
 
 export function buyItem(user_item) {
     return function (dispatch){
@@ -227,41 +143,4 @@ export function useItem( boughtCopy){
 }
 
 
-   
-// export function feedPet(pet) {
-//     return function (dispatch){
-//         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
-//             method: 'PATCH',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Accepts': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 hunger: pet.hunger + 1
-//             })
-//         })
-//         .then(resp => resp.json())
-//         .then(data =>  dispatch({type: FEED_PET, payload: data}))
-        
-//     }
-
-// }
-
-// export function playWithPet(pet) {
-//     return function (dispatch){
-//         fetch(`http://localhost:5000/api/v1/pets/${pet.id}`, {
-//             method: 'PATCH',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Accepts': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 happiness: pet.happiness + 1
-//             })
-//         })
-//         .then(resp => resp.json())
-//         .then(data =>  dispatch({type: PLAY_WITH_PET, payload: data}))
-        
-//     }
-
-// }
+ 

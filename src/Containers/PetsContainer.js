@@ -16,8 +16,6 @@ export default function PetsContainer({user, points, spend, currentPet, bought, 
              <ItemBar points={points} spend={spend} boughtItems={boughtItems} user={user}/>
             </div>
             {user ? 
-                
-                    
                 <div className="pets-container">
                     <h1>Your Dudes</h1>
                     {renderPets()}

@@ -1,5 +1,3 @@
-// export const FETCH_PETS = "FETCH_PETS"
-// export const ADD_PET = "ADD_PET"
 export const SET_CURRENT_PET = "SET_CURRENT_PET" //mdp PetCard msp app
 export const BUY_ITEM = 'BUY_ITEM' //mdp ItemCard msp app
 export const GET_BOUGHT = 'GET_BOUGHT' //mdp app msp app

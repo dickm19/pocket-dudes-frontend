@@ -2,7 +2,6 @@ import Snake from 'react-simple-snake'
 import React from 'react'
 import { awardPoints, setHighScore } from '../redux/actions';
 import { connect } from 'react-redux'
-// import './SnakeGame.css'
 
 class SnakeGame extends React.Component {
 
@@ -11,7 +10,6 @@ class SnakeGame extends React.Component {
         if (props.user){
             this.state = {
                 clicked: false,
-                // same: props.user.high_score === parseInt(localStorage.snakeHighScore),
                 userHighScore: this.props.user.high_score,
                 currentHighScore: parseInt(localStorage.snakeHighScore)
             }

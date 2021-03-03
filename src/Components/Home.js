@@ -1,7 +1,6 @@
 import React from 'react'
 
 import PetCard from './PetCard'
-// import NewPetModal from './NewPetModal'
 
 export default function Home({ user, history,  currentPet, happiness, hunger, bought }){
     return(

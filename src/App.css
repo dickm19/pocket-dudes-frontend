@@ -9,15 +9,11 @@
 
 }
 body{
-  /* background-color: rgb(153, 166, 220); */
-  /* background-color: rgb(181, 159, 213); */
-  /* background-color: rgb(251, 200, 156); */
   background-color: rgb(247, 209, 114);
 }
 
 .snake-game{
   grid-area: main;
-  /* margin-top: auto; */
   margin-left: 42vh;
   margin-top: 0;
   text-align: center;
@@ -45,11 +41,6 @@ body{
 
 .navbar{
   grid-area: navbar;
-  /* grid-template-areas:  'pets .'
-                        'adopt .'
-                        'shop .'
-                        'play .';
-  grid-template-columns: 3vh 1vh 1vh 1vh;  */
   text-align: center;
   height: 80vh;
   overflow: scroll;
@@ -89,16 +80,7 @@ a{
 .pets-container h1{
   color:rgb(203, 137, 158);
 }
-/* button{
-  border-radius: 20px;
-  background-color: rgb(213, 127, 200);
-  color: rgb(83, 42, 123);
-  transition: 0.3s;
-}
 
-button:hover{
-  background-color: rgb(251, 231, 159);
-} */
 .item-bar{
   grid-area: itembar;
   text-align: center;
@@ -122,7 +104,6 @@ button:hover{
   font-family: 'Chewy', cursive;
   color: rgb(98, 50, 135);
   text-align: center;
-  /* margin-right: 0vh; */
 }
 .adopt-pet .adopt-text{
   font-size: 5vh;
@@ -138,7 +119,6 @@ button:hover{
 input{
   text-shadow: 1px 1px 0 #fff;
   box-shadow: inset 2px 2px 5px#babecc, inset -5px -5px 10px #fff;
-  /* width: 100%; */
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
   appearance: none;
@@ -151,13 +131,8 @@ input{
   font-family: "Montserrat", sans-serif;
   letter-spacing: -0.2px;
   margin-right: 2vh;
-  /* &:focus {
-    box-shadow: inset 1px 1px 2px #babecc,
-      inset -1px -1px 2px #fff;
-  } */
 }
 button {
-  /* color: $color-shadow; */
   margin-left: 2vh;
   background-color: rgb(219, 185, 237);
   text-shadow: 1px 1px 0 #fff;
@@ -188,14 +163,9 @@ button {
   }
 .dropdown{
   grid-area:main;
-  /* text-align: center; */
   width: 50vh;
 }
-/* .dropdown-control{
-  border-radius: 20%;
-  background-color: red;
-  color: red;
-} */
+
 .header{
   grid-area: header;
   margin: auto;

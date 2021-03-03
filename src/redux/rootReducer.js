@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 
 const defaultState = {
-    // petsApi: [],
     currentPet: null,
     bought: [],
     user: null,
@@ -13,8 +12,6 @@ const defaultState = {
     highScore: 0,
     val: null,
     itemBools: []
-    // boughtBool: false
-    
 }
 function pointsReducer(state = defaultState.points, action){
     switch(action.type){
@@ -28,18 +25,6 @@ function pointsReducer(state = defaultState.points, action){
             return state
     }
 }
-
-// function boughtBoolReducer(state = defaultState.boughtBool, action){
-//     switch(action.type){
-
-//         case 'GET_BOUGHT_BOOL':
-//             return action.payload
-//         case 'SET_BOUGHT_BOOL':
-//             return action.payload
-//         default:
-//             return state
-//     }
-// }
 
 function itemBoolsReducer(state = defaultState.itemBools, action){
     switch(action.type){
@@ -158,7 +143,6 @@ function petsReducer(state = defaultState.pets, action){
 }
 
 const rootReducer = combineReducers({
-    // petsApi: petsApiReducer,
     currentPet: currentPetReducer,
     bought: boughtReducer,
     user: userReducer,
@@ -170,7 +154,6 @@ const rootReducer = combineReducers({
     val: valReducer,
     highScore: highScoreReducer,
     itemBools: itemBoolsReducer
-    // boughtBool: boughtBoolReducer
   });
   
 

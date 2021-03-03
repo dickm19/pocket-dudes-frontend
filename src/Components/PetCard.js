@@ -39,7 +39,6 @@ const PetCard = React.memo(class extends React.Component{
                 })
                 .then(resp => resp.json())
                 .then(() => {
-                    // window.location.reload()
                     this.setState({
                         happiness: this.state.happiness - 1
                     },
@@ -66,7 +65,6 @@ const PetCard = React.memo(class extends React.Component{
             })
             .then(resp => resp.json())
             .then( () => {
-                // window.location.reload()
                 this.setState({
                     hunger: this.state.hunger - 1
                 },
@@ -89,7 +87,6 @@ const PetCard = React.memo(class extends React.Component{
     }
     
     interactWithPet = (itemType, need) => {
-        // console.log(this.props.pet[need])
         if (this.state[need] < 10 && this.props.pet[need] < 10){
             const boughtItems = this.props.bought.filter(user_item => user_item.item.kind === itemType)
             if (boughtItems.length > 0){
@@ -135,10 +132,6 @@ const PetCard = React.memo(class extends React.Component{
                     .then(() =>{
                         this.setState({hunger: this.state.hunger + 1})
                         this.props.useItem(boughtCopy)
-                        // this.forceUpdate()
-                        // this.props.unBuy(boughtCopy)
-                        // this.props.setItemBool(user_item.item, boughtCopy)
-                        // this.props.setBoughtGlobal(user_item.item)
                     })
                 }else{
                     this.props.incrementHappiness(this.props.pet)
@@ -179,7 +172,6 @@ const PetCard = React.memo(class extends React.Component{
                     .then(() =>{
                         this.setState({happiness: this.state.happiness + 1})
                         this.props.useItem(boughtCopy)
-                        // this.props.setItemBool(user_item.item, boughtCopy)
                     })
                 }
             }
@@ -255,17 +247,9 @@ function mdp(dispatch) {
         incrementHunger: (pet) => dispatch(incrementHunger(pet)),
         decrementHappiness: (pet) => dispatch(decrementHappiness(pet)),
         decrementHunger: (pet) => dispatch(decrementHunger(pet)),
-        // setCurrentPet: (pet) => dispatch(setCurrentPet(pet)),
-        // feedPet: (pet) => dispatch(feedPet(pet)),
-        // playWithPet: (pet) => dispatch(playWithPet(pet)),
         useItem: (user_item, bought) => dispatch(useItem(user_item, bought)),
-        // decrementPetHappiness: (pet) => dispatch(decrementPetHappiness(pet)),
-        // decrementPetHunger: (pet) => dispatch(decrementPetHunger(pet)),
         getHappiness: (pet) => dispatch(getPetHappiness(pet)),
         getHunger: (pet) => dispatch(getPetHunger(pet)),
-        // unsetCurrentPet: (pet) => dispatch(unsetCurrentPet(pet)),
-        // unBuy: (item, bought) => dispatch(unBuy(item, bought)),
-        // setItemBool: (item, bought) => dispatch(setItemBool(item, bought))
      }
 }
 export default connect(null, mdp)(PetCard);

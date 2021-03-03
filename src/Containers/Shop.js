@@ -10,7 +10,6 @@ import 'react-dropdown/style.css';
 
     const boughtItems = bought.map(user_item => user_item.item)
     const filteredItems = () => {
-        // console.log(bought)
         if (selection === 'all'){
             return items.map(item => {
                    return <ItemCard   points={points} spend={spend} boughtItems={boughtItems} user={user} key={item.id} item={item}/>

@@ -1,6 +1,5 @@
 import React, { Component} from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom';
-// import Home from './Components/Home'
 import SnakeGame from './Components/SnakeGame'
 import PetsContainer from './Containers/PetsContainer'
 import Shop from './Containers/Shop'
