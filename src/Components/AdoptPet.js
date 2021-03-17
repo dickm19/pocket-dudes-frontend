@@ -6,7 +6,6 @@ class AdoptPet extends React.Component{
 
     state = {
         count: 0,
-        image: {},
         images: [],
         clicked: false,
         name: '',
