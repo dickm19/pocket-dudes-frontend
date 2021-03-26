@@ -1,5 +1,5 @@
 import React from 'react'
-import { useItem, incrementHappiness, incrementHunger, getPetHappiness, getPetHunger,  decrementHappiness, decrementHunger } from '../redux/actions';
+import { useItem } from '../redux/actions';
 import { connect } from 'react-redux'
 import './PetCard.css'
 
@@ -95,7 +95,6 @@ const PetCard = React.memo(class extends React.Component{
                 const index = boughtCopy.findIndex(item => item === user_item)
                 boughtCopy.splice(index, 1)
                 if (need === 'hunger'){
-                    this.props.incrementHunger(this.props.pet)
                     Promise.all([
                         fetch(`${petsUrl}/${this.props.pet.id}`, {
                             method: 'PATCH',
@@ -134,7 +133,6 @@ const PetCard = React.memo(class extends React.Component{
                         this.props.useItem(boughtCopy)
                     })
                 }else{
-                    this.props.incrementHappiness(this.props.pet)
                 
                     Promise.all([
                         fetch(`${petsUrl}/${this.props.pet.id}`, {
@@ -243,13 +241,7 @@ const PetCard = React.memo(class extends React.Component{
 )
 function mdp(dispatch) {
     return { 
-        incrementHappiness: (pet) => dispatch(incrementHappiness(pet)),
-        incrementHunger: (pet) => dispatch(incrementHunger(pet)),
-        decrementHappiness: (pet) => dispatch(decrementHappiness(pet)),
-        decrementHunger: (pet) => dispatch(decrementHunger(pet)),
         useItem: (user_item, bought) => dispatch(useItem(user_item, bought)),
-        getHappiness: (pet) => dispatch(getPetHappiness(pet)),
-        getHunger: (pet) => dispatch(getPetHunger(pet)),
      }
 }
 export default connect(null, mdp)(PetCard);

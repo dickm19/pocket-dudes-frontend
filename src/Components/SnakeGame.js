@@ -1,6 +1,6 @@
 import Snake from 'react-simple-snake'
 import React from 'react'
-import { awardPoints, setHighScore } from '../redux/actions';
+import { awardPoints } from '../redux/actions';
 import { connect } from 'react-redux'
 
 class SnakeGame extends React.Component {
@@ -75,7 +75,6 @@ function msp(state) {
 function mdp(dispatch) {
     return { 
         awardPoints: (points, user) => dispatch(awardPoints(points, user)),
-        setHighScore: (points) => dispatch(setHighScore(points))
     }
 }
 

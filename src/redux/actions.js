@@ -1,4 +1,4 @@
-import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, GET_PET_HAPPINESS, GET_PET_HUNGER, INCREMENT_HAPPINESS, INCREMENT_HUNGER, DECREMENT_HUNGER, DECREMENT_HAPPINESS, AWARD_POINTS, SET_VAL, SET_HIGH_SCORE, SPEND_POINTS, GET_POINTS} from './actionTypes'
+import { BUY_ITEM, GET_BOUGHT, GET_USER, GET_PETS, ADD_PET, USE_ITEM, GET_ITEMS, AWARD_POINTS, SPEND_POINTS, GET_POINTS} from './actionTypes'
 
 export function getPoints(){
     return function (dispatch){
@@ -6,23 +6,6 @@ export function getPoints(){
         .then(resp => resp.json())
         .then(data =>  dispatch({type: GET_POINTS, payload: data.user.points}) )
        
-    }
-}
-
-export function setHighScore(score){
-    return function (dispatch){
-        dispatch({type: SET_HIGH_SCORE, payload: score})
-    }
-}
-
-export function setVal(e){
-    return function (dispatch){
-        dispatch({type: SET_VAL, payload: e.key})
-    }
-}
-export function getPetHappiness(pet) {
-    return function (dispatch) {
-        dispatch({type: GET_PET_HAPPINESS, payload: pet.happiness})
     }
 }
 
@@ -48,35 +31,6 @@ export function awardPoints(points, user) {
     }
 }
 
-export function getPetHunger(pet) {
-    return function (dispatch) {
-        dispatch({type: GET_PET_HUNGER, payload: pet.hunger})
-    }
-}
-
-export function incrementHappiness(pet){
-    return function (dispatch) {
-        dispatch({type: INCREMENT_HAPPINESS, payload: pet.happiness})
-    }
-}
-
-export function incrementHunger(pet){
-    return function (dispatch) {
-        dispatch({type: INCREMENT_HUNGER, payload: pet.hunger})
-    }
-}
-
-export function decrementHappiness(pet){
-    return function (dispatch) {
-        dispatch({type: DECREMENT_HAPPINESS, payload: pet.happiness - 1})
-    }
-}
-
-export function decrementHunger(pet){
-    return function (dispatch) {
-        dispatch({type: DECREMENT_HUNGER, payload: pet.hunger - 1 })
-    }
-}
 
 export function getItems(){
     return function (dispatch){
