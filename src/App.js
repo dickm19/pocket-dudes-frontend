@@ -6,11 +6,10 @@ import Shop from './Containers/Shop'
 import NavBar from './Components/NavBar'
 import { connect } from 'react-redux'
 import AdoptPet from './Components/AdoptPet'
-import { getBought, getItems, getUser, getPets, setVal, getPoints} from './redux/actions';
+import { getBought, getItems, getUser, getPets, getPoints} from './redux/actions';
 import './App.css';
 
 class App extends Component {
-
 
     state = {
       images: [],
@@ -59,7 +58,7 @@ class App extends Component {
             exact
             path="/pets"
             render={() => 
-              <PetsContainer  setBoughtGlobal={this.setBoughtGlobal} itemBool={this.state.itemBool} spend={this.spend} points={this.props.points} happiness={this.props.happiness} hunger={this.props.hunger} history={this.props.history} bought={this.props.bought} pets={this.props.pets} currentPet={this.props.currentPet} user={this.props.user}/>
+              <PetsContainer  setBoughtGlobal={this.setBoughtGlobal} itemBool={this.state.itemBool} spend={this.spend} points={this.props.points} history={this.props.history} bought={this.props.bought} pets={this.props.pets} currentPet={this.props.currentPet} user={this.props.user}/>
             }
           />
           <Route
@@ -86,13 +85,10 @@ class App extends Component {
 
 function msp(state) {
   return {
-      currentPet: state.currentPet,
       bought: state.bought,
       user: state.user,
       pets: state.pets,
       items: state.items,
-      happiness: state.happiness,
-      hunger: state.hunger,
       points: state.points,
   }
 }
@@ -104,7 +100,6 @@ function mdp(dispatch) {
       getUser: () => dispatch(getUser()),
       getPets: () => dispatch(getPets()),
       getItems: () => dispatch(getItems()),
-      setVal: (e) => dispatch(setVal(e)),
       getPoints: () => dispatch(getPoints()),
    }
 }
