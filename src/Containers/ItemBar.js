@@ -4,7 +4,7 @@ import '../App.css'
 export default class ItemBar extends React.Component {
 
     renderItems = () => {
-        return this.props.boughtItems.map(itemObj => <ItemCard points={this.props.points} spend={this.props.spend} boughtItems={this.props.boughtItems} user={this.props.user} key={itemObj.id} item={itemObj}/>)
+        return this.props.boughtItems.map(itemObj => <ItemCard points={this.props.points}  boughtItems={this.props.boughtItems} user={this.props.user} key={itemObj.id} item={itemObj}/>)
     }
     render(){
         return(

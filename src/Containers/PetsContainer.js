@@ -2,18 +2,18 @@ import React from 'react'
 import PetCard from '../Components/PetCard'
 import ItemBar from './ItemBar'
 import './PetsContainer.css'
-export default function PetsContainer({user, points, spend, currentPet, bought, pets, happiness, hunger}){
+export default function PetsContainer({user, points, bought, pets}){
 
     const boughtItems = bought.map(user_item => user_item.item)
     
     const renderPets = () => {
-        return pets.map(petObj => <PetCard happiness={happiness} hunger={hunger} currentPet={currentPet} bought={bought} user={user}  key={petObj.id} pet={petObj}/>)
+        return pets.map(petObj => <PetCard  bought={bought} user={user}  key={petObj.id} pet={petObj}/>)
     }
 
     return(
         <>
             <div className="item-bar">
-             <ItemBar points={points} spend={spend} boughtItems={boughtItems} user={user}/>
+             <ItemBar points={points} boughtItems={boughtItems} user={user}/>
             </div>
             {user ? 
                 <div className="pets-container">

@@ -11,9 +11,6 @@ import './App.css';
 
 class App extends Component {
 
-    state = {
-      images: [],
-    }
 
   componentDidMount(){
     this.props.getUser()
@@ -44,7 +41,7 @@ class App extends Component {
             exact
             path="/game"
             render={()=>
-              <SnakeGame points={this.props.points} user={this.props.user} awardPoints={this.awardPoints}/>
+              <SnakeGame points={this.props.points} user={this.props.user}/>
             }
             />
           <Route
@@ -58,14 +55,14 @@ class App extends Component {
             exact
             path="/pets"
             render={() => 
-              <PetsContainer  setBoughtGlobal={this.setBoughtGlobal} itemBool={this.state.itemBool} spend={this.spend} points={this.props.points} history={this.props.history} bought={this.props.bought} pets={this.props.pets} currentPet={this.props.currentPet} user={this.props.user}/>
+              <PetsContainer points={this.props.points} history={this.props.history} bought={this.props.bought} pets={this.props.pets}  user={this.props.user}/>
             }
           />
           <Route
             exact
             path="/shop"
             render={() => 
-              <Shop  points={this.props.points} spend={this.spend} bought={this.props.bought} items={this.props.items} user={this.props.user}/>
+              <Shop  points={this.props.points} bought={this.props.bought} items={this.props.items} user={this.props.user}/>
             }
           />
           <div className='user-points'>
